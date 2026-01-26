@@ -14,7 +14,7 @@ function Navigation() {
                         <NavLink className={({ isActive }) => isActive ? "active-nav-link" : "default-nav-link"} to="*">Bestellen</NavLink>
                     </li>
                     <li>
-                        <NavLink className={({ isActive }) => isActive ? "active-nav-link" : "default-nav-link"} to="*">Medewerkersportaal</NavLink>
+                        <NavLink className={({ isActive }) => isActive ? "active-nav-link" : "default-nav-link"} to="/login">Medewerkersportaal</NavLink>
                     </li>
                 </ul>
             </nav>

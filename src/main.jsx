@@ -5,6 +5,7 @@ import './index.css'
 import App from './App.jsx'
 import AuthContext from './contexts/AuthContext.jsx';
 
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
       <Router>
@@ -12,5 +13,5 @@ createRoot(document.getElementById('root')).render(
               <App />
           </AuthContext>
       </Router>
-  </StrictMode>,
-)
+</StrictMode>,
+);

@@ -24,7 +24,7 @@ function HomePage() {
                         Wij bezorgen binnen de volgende postcodes:
                         {formatListZipCodes()}
                     </p>
-                    <Button buttonText="Nieuwe bestelling"/>
+                    <Button buttonType="button" buttonText="Nieuwe bestelling"/>
                 </Card>
                 <Card width={550} height={450} fontSize={20} alignItems="center">
                     <h3>Bezorgtijden</h3>

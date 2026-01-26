@@ -1,6 +1,6 @@
 // TODO: write logout function
 
-import {useState, createContext} from 'react';
+import {createContext, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 export const AuthContext = createContext({});
@@ -15,15 +15,15 @@ function AuthContextProvider({ children }) {
         navigate('/staff');
     }
 
-    const authData = {
+    const data = {
         isAuth: isAuth,
         login: login,
     }
 
     return (
-        <AuthContextProvider value={authData}>
+        <AuthContext.Provider value={data}>
             {children}
-        </AuthContextProvider>
+        </AuthContext.Provider>
     )
 }
 

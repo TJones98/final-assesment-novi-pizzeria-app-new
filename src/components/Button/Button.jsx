@@ -1,8 +1,8 @@
 import './Button.css'
 
-function Button({buttonText}) {
+function Button({buttonText, buttonType}) {
     return (
-        <button type='button'>{buttonText}</button>
+        <button type={buttonType}>{buttonText}</button>
     )
 }
 

@@ -1,0 +1,13 @@
+.label-and-input {
+    width: 80%;
+}
+
+.label-and-input > label {
+     display: flex;
+     flex-direction: column;
+ }
+
+label > input {
+    height: 2.5rem;
+}
+
