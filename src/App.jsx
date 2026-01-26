@@ -4,6 +4,7 @@ import './App.css'
 import {Route, Routes} from 'react-router-dom';
 import HomePage from './pages/HomePage/HomePage.jsx';
 import LoginPage from './pages/LoginPage/LoginPage.jsx';
+import StaffPage from './pages/StaffPage/StaffPage.jsx';
 import Navigation from './components/navigation/Navigation.jsx';
 import Footer from "./components/footer/Footer.jsx";
 
@@ -15,6 +16,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/login" element={<LoginPage />} />
+                    <Route path="/staff" element={<StaffPage />} />
                 </Routes>
             </main>
             <Footer/>
