@@ -5,8 +5,8 @@ function formatDeliveryTimes() {
     return (
         <ul>
             {deliveryTimes.map((day) => {
-                return <div className="delivery-times-list" key={day}>
-                    <li key={day.id}><strong>{day.name}:</strong> {day.openingHours}</li>
+                return <div className="delivery-times-list" key={day.id}>
+                    <li><strong>{day.name}:</strong> {day.openingHours}</li>
                 </div>
             })}
         </ul>
