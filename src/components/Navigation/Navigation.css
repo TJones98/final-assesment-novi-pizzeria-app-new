@@ -17,6 +17,14 @@
     font-size: 1.2rem;
 }
 
+.auth-navigation {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+    font-size: 1.2rem;
+}
+
 .default-nav-link {
     text-decoration: none;
 }
