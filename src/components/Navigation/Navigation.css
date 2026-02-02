@@ -19,8 +19,10 @@
 
 .default-nav-link {
     text-decoration: none;
+    color: var(--color-primary);
 }
 
 .active-nav-link {
     text-decoration: underline;
+    color: var(--color-primary);
 }

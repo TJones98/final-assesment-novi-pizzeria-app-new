@@ -5,6 +5,7 @@ import React, {useContext} from 'react';
 import {Route, Routes, Navigate} from 'react-router-dom';
 import HomePage from './pages/HomePage/HomePage.jsx';
 import LoginPage from './pages/LoginPage/LoginPage.jsx';
+import PageNotFound from './pages/PageNotFound.jsx';
 import StaffDashboard from './pages/StaffDashboard/StaffDashboard.jsx';
 import Navigation from './components/navigation/Navigation.jsx';
 import Footer from "./components/footer/Footer.jsx";
@@ -22,6 +23,7 @@ function App() {
                     <Route path="/" element={<HomePage />} />
                     <Route path="/staff" element={isAuth ? <StaffDashboard /> : <Navigate to="/login"/>} />
                     <Route path="/login" element={<LoginPage />} />
+                    <Route path="/*" element={<PageNotFound />} />
                 </Routes>
             </main>
             <Footer/>
