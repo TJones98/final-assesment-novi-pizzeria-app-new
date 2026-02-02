@@ -14,9 +14,9 @@ function Navigation() {
                 <ul>
                     {isAuth ?
                         <div className="auth-navigation">
-                            <p>{userData.email}</p>
+                            <p className="active-user">{userData.email}</p>
                             <li>
-                                <NavLink className={({ isActive }) => isActive ? "active-nav-link" : "default-nav-link"} to="/">Home</NavLink>
+                                <NavLink className={({ isActive }) => isActive ? "active-nav-link" : "default-nav-link"} to="/staff">Dashboard</NavLink>
                             </li>
                             <li>
                                 <Button buttonType="button" onClick={logout} buttonText="Afmelden"/>
