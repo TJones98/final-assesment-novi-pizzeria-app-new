@@ -5,12 +5,14 @@ import './StaffDashboard.css'
 import {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../../contexts/AuthContext.jsx";
 import axios from 'axios';
+import {useNavigate} from "react-router-dom";
 
 function StaffDashboard() {
     const {userData} = useContext(AuthContext);
     const [orders, setOrders] = useState([]);
     const [filterCompletion, toggleFilterCompletion] = useState(false);
     const token = localStorage.getItem('token');
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function fetchOrders() {
@@ -61,6 +63,10 @@ function StaffDashboard() {
         }
     }
 
+    function redirectToOrderDetails(orderId) {
+        navigate(`/orders/${orderId}`);
+    }
+
     return (
         <>
             <PageTitle title="Personeelsdashboard" subtitle="Werk ze vandaag!"/>
@@ -79,7 +85,7 @@ function StaffDashboard() {
                     buttonType="button"
                     buttonText="Bewerk menu"
                     disabled={!userData.roles.includes("admin")}
-                    onClick="onClick"/>
+                />
             </div>
             <Card width={500} height={700}>
                 {filteredOrders.length > 0 ?
@@ -94,6 +100,11 @@ function StaffDashboard() {
                                     buttonType="button"
                                     buttonText={filterCompletion ? "Open zetten" : "Afronden"}
                                     onClick={() => toggleOrderStatus(order.id, order.completed)}
+                                />
+                                <Button
+                                    buttonType="button"
+                                    buttonText="Details"
+                                    onClick={() => redirectToOrderDetails(order.id)}
                                 />
                             </li>
                         })}
