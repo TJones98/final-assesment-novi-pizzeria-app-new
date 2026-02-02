@@ -1,8 +1,8 @@
 import './Button.css'
 
-function Button({buttonText, buttonType, onClick}) {
+function Button({buttonText, buttonType, onClick, disabled}) {
     return (
-        <button type={buttonType} onClick={onClick}>
+        <button type={buttonType} onClick={onClick} disabled={disabled}>
             {buttonText}
         </button>
     )

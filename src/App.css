@@ -7,4 +7,5 @@
     align-items: center;
     padding: 2rem;
     overflow: auto;
+    gap: 2rem;
 }
