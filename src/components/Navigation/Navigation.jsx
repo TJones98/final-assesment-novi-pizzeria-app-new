@@ -5,7 +5,7 @@ import {AuthContext} from '../../contexts/AuthContext';
 import Button from '../../components/Button/Button.jsx';
 
 function Navigation() {
-    const {isAuth, logout} = useContext(AuthContext);
+    const {isAuth, userData, logout} = useContext(AuthContext);
 
     return (
         <>
@@ -13,9 +13,15 @@ function Navigation() {
                 <h2>Palermo</h2>
                 <ul>
                     {isAuth ?
-                        <li>
-                            <Button buttonType="button" onClick={logout} buttonText="Afmelden"/>
-                        </li>
+                        <div className="auth-navigation">
+                            <p className="active-user">{userData.email}</p>
+                            <li>
+                                <NavLink className={({ isActive }) => isActive ? "active-nav-link" : "default-nav-link"} to="/staff">Dashboard</NavLink>
+                            </li>
+                            <li>
+                                <Button buttonType="button" onClick={logout} buttonText="Afmelden"/>
+                            </li>
+                        </div>
                         :
                         <div className="main-navigation-links">
                             <li>

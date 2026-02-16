@@ -7,11 +7,11 @@ import AuthContext from './contexts/AuthContext.jsx';
 
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  // <StrictMode>
       <Router>
           <AuthContext>
               <App />
           </AuthContext>
       </Router>
-</StrictMode>,
+  // </StrictMode>
 );
