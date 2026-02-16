@@ -7,7 +7,9 @@ function InputField({register, labelAndId, labelText, type, registerTitle}) {
                 {labelText}
                 <input type={type}
                        id={labelAndId}
-                       {...register(registerTitle)}
+                       {...register(registerTitle, {
+                           required: "Dit veld is verplicht",
+                       })}
                 />
             </label>
         </div>

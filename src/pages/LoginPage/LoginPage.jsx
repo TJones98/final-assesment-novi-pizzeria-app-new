@@ -10,7 +10,7 @@ import axios from 'axios';
 
 function LoginPage() {
     const {login} = useContext(AuthContext);
-    const {register, handleSubmit} = useForm();
+    const {register, handleSubmit, formState: { errors }} = useForm();
     const controller = new AbortController();
     const [error, toggleError] = useState(false);
     const [loading, toggleLoading] = useState(false);
@@ -56,12 +56,14 @@ function LoginPage() {
                             register={register}
                             registerTitle="email"
                     />
+                    {errors.email && <p className="contrast-text">{errors.email.message}</p>}
                     <InputField type="password"
                                 labelText="Wachtwoord:"
                                 labelAndId="password-field"
                                 register={register}
                                 registerTitle="password"
                     />
+                    {errors.password && <p className="contrast-text">{errors.password.message}</p>}
                     <Button buttonType="submit" buttonText="Login" disabled={loading === true}/>
                 </form>
             </Card>
