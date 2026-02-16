@@ -79,7 +79,7 @@ function AuthContextProvider({ children }) {
     }
 
     function logout() {
-        localStorage.clear();
+        localStorage.removeItem('token');
         toggleAuth({
             isAuth: false,
             user: null,

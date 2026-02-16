@@ -90,3 +90,7 @@ a:hover {
 img {
     width: 100%;
 }
+
+.contrast-text {
+    color: var(--color-contrast-light);
+}

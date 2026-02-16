@@ -4,7 +4,7 @@ import Card from '../../components/Card/Card.jsx';
 import Button from '../../components/Button/Button.jsx';
 import {AuthContext} from '../../contexts/AuthContext';
 import {useForm} from 'react-hook-form';
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import InputField from '../../components/InputField/InputField.jsx';
 import axios from 'axios';
 
@@ -12,6 +12,8 @@ function LoginPage() {
     const {login} = useContext(AuthContext);
     const {register, handleSubmit} = useForm();
     const controller = new AbortController();
+    const [error, toggleError] = useState(false);
+    const [loading, toggleLoading] = useState(false);
 
     useEffect(() => {
         return function cleanup() {
@@ -21,6 +23,9 @@ function LoginPage() {
 
 
     async function onSubmit(data) {
+        toggleError(false);
+        toggleLoading(true);
+
         try {
             const response = await axios.post('https://novi-backend-api-wgsgz.ondigitalocean.app/api/login', {
                 'email': data.email,
@@ -32,9 +37,11 @@ function LoginPage() {
                 signal: controller.signal,
             });
             login(response.data);
-            console.log(response.data);
         } catch(e) {
             console.log("Probleem bij inloggen", e);
+            toggleError(true);
+        } finally {
+            toggleLoading(false);
         }
     }
 
@@ -55,9 +62,11 @@ function LoginPage() {
                                 register={register}
                                 registerTitle="password"
                     />
-                    <Button buttonType="submit" buttonText="Login" />
+                    <Button buttonType="submit" buttonText="Login" disabled={loading === true}/>
                 </form>
             </Card>
+            {loading && <strong className="contrast-text">loading...</strong>}
+            {error && <strong className="contrast-text">Inloggegevens onjuist. Probeer het nog eens.</strong>}
         </>
     )
 }
