@@ -1,7 +1,12 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import calculateTotalOrderPrice from '../../helpers/calculateTotalOrderPrice.js';
 import axios from 'axios';
 import Card from '../../components/Card/Card.jsx';
+import './OrderDetail.css'
+import formatJsonDate from '../../helpers/formatJsonDate';
+import formatPrice from '../../helpers/formatPrice';
+import Button from '../../components/Button/Button';
 
 function OrderDetail() {
     const {id} = useParams();
@@ -11,6 +16,7 @@ function OrderDetail() {
     const [error, toggleError] = useState(false);
     const [loading, toggleLoading] = useState(false);
     const token = localStorage.getItem('token');
+    const navigate = useNavigate();
 
     useEffect(() => {
         const controller = new AbortController();
@@ -70,26 +76,54 @@ function OrderDetail() {
 
     }, [id, token])
 
+    function redirectToDashboard() {
+        navigate("/staff");
+    }
 
     return (
         <Card>
             {error && <p>Er is iets misgegaan bij het ophalen van de data. Probeer het nog eens.</p>}
             {loading && <p>Loading...</p>}
             {order ? (
-                <article>
+                <article className="order-details">
                     <h4>Order #{order.id}</h4>
-                    <strong>Datum & tijdslot:</strong>
-                    <p>{order.orderDate}, {order.timeslot}</p>
-                    <strong>Klant:</strong>
-                    {customer && <p>{customer.name}, {customer.email}</p>}
-                    <strong>Bestelling:</strong>
-                    <ul>
-                        {orderItems.map((orderItem)  => {
-                            return <li key={orderItem.id}>
-                                <p>{orderItem.menuItemName}</p>
-                            </li>
-                        })}
-                    </ul>
+                    <div>
+                        <strong>Datum & tijdslot:</strong>
+                        <p>{formatJsonDate(order.orderDate)}</p>
+                        <p>{order.timeslot}</p>
+                    </div>
+                    <div>
+                        <strong>Klant:</strong>
+                        {customer && <p>{customer.name} ({customer.email})</p>}
+                    </div>
+                    <div>
+                        <strong>Adres:</strong>
+                        {customer &&
+                            <div>
+                                <p>{customer.street} {customer.houseNumber}</p>
+                                <p>{customer.zipCode}</p>
+                                <p>{customer.city}</p>
+                            </div>
+                        }
+                    </div>
+                    {orderItems.length > 0 ?
+                        <div>
+                            <strong>Bestelling:</strong>
+                            <ul>
+                                {orderItems.map((orderItem)  => {
+                                    return <li key={orderItem.id}>
+                                        <p>{orderItem.menuItemName} - {orderItem.quantity}x <small>(prijs per stuk: €{formatPrice(orderItem.unitPrice)})</small></p>
+                                    </li>
+                                })}
+                            </ul>
+                        </div> : <p>Bestelling bevat geen items</p>
+                    }
+                    <p><strong>Totaal:</strong> €{formatPrice(calculateTotalOrderPrice(orderItems))}</p>
+                    <Button
+                        buttonType="button"
+                        buttonText="Terug"
+                        onClick={redirectToDashboard}
+                    />
                 </article>
             ) : (
                 <p>Geen orders gevonden</p>

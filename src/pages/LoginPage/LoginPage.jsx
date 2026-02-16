@@ -32,6 +32,7 @@ function LoginPage() {
                 signal: controller.signal,
             });
             login(response.data);
+            console.log(response.data);
         } catch(e) {
             console.log("Probleem bij inloggen", e);
         }

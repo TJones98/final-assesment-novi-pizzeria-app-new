@@ -6,6 +6,7 @@ import {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../../contexts/AuthContext.jsx";
 import axios from 'axios';
 import {useNavigate} from "react-router-dom";
+import formatJsonDate from "../../helpers/formatJsonDate.js";
 
 function StaffDashboard() {
     const {userData} = useContext(AuthContext);
@@ -24,7 +25,7 @@ function StaffDashboard() {
             toggleError(false);
 
             try {
-                const response = await axios.get('https://novi-backend-api-wgsgz.ondigitalocean.app/api/orders', {
+                const response = await axios.get('https://novi-backend-api-wgsgz.ondigitalocean.app/api/orders?sort=orderDate,timeslot', {
                     headers: {
                         'novi-education-project-id': 'fa5d53e3-5361-45a4-b01e-ae2b978120fa',
                         'Authorization': `Bearer ${token}`,
@@ -108,27 +109,30 @@ function StaffDashboard() {
                     disabled={!userData.roles.includes("admin")}
                 />
             </div>
-            <Card width={600} height={1200}>
-                {error && <p>Er is iets misgegaan bij het ophalen van de data. Probeer het nog eens.</p>}
+            <Card height={1200}>
+                {error && <p>Er is iets misgegaan bij het ophalen van de data. Probeer het later nog eens.</p>}
                 {loading && <p>Loading...</p>}
                 {filteredOrders.length > 0 ?
-                    <ul>
+                    <ul className="orders">
                         {filteredOrders.map((order) => {
                             return <li key={order.id}>
-                                <p><strong>Order #{order.id}</strong></p>
-                                <p>Datum: {order.orderDate}</p>
-                                <p>Tijdslot: {order.timeslot}</p>
-                                <p>Totaal: €{order.total} </p>
-                                <Button
-                                    buttonType="button"
-                                    buttonText={filterCompletion ? "Open zetten" : "Afronden"}
-                                    onClick={() => toggleOrderStatus(order.id, order.completed)}
-                                />
-                                <Button
-                                    buttonType="button"
-                                    buttonText="Details"
-                                    onClick={() => redirectToOrderDetails(order.id)}
-                                />
+                                <div className="order-info">
+                                    <p><strong>Order #{order.id}</strong></p>
+                                    <p>Datum: {formatJsonDate(order.orderDate)}</p>
+                                    <p>Tijdslot: {order.timeslot}</p>
+                                </div>
+                                <div className="order-buttons">
+                                    <Button
+                                        buttonType="button"
+                                        buttonText="Details"
+                                        onClick={() => redirectToOrderDetails(order.id)}
+                                    />
+                                    <Button
+                                        buttonType="button"
+                                        buttonText={filterCompletion ? "Open zetten" : "Afronden"}
+                                        onClick={() => toggleOrderStatus(order.id, order.completed)}
+                                    />
+                                </div>
                             </li>
                         })}
                     </ul>

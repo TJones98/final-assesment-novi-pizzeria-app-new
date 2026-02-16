@@ -73,6 +73,10 @@ strong {
     font-style: normal;
 }
 
+small {
+    font-size: 0.5rem;
+}
+
 a {
     font-family: "Lato", sans-serif;
     color: var(--color-primary);
