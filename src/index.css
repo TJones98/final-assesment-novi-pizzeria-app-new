@@ -79,12 +79,12 @@ small {
 
 a {
     font-family: "Lato", sans-serif;
-    color: var(--color-primary);
+    color: var(--color-contrast-dark);
     text-decoration: none;
 }
 
 a:hover {
-    color: var(--color-contrast-dark);
+    color: var(--color-contrast-light);
 }
 
 img {
