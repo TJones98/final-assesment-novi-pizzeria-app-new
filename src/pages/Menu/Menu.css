@@ -1,0 +1,12 @@
+.menu-page-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+}
+
+.menu-divider {
+    border: 0.5px solid var(--color-primary);
+    width: 700px;
+}
