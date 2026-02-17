@@ -3,6 +3,7 @@ import Card from '../../components/Card/Card.jsx';
 import Button from '../../components/Button/Button.jsx';
 import {useEffect, useState} from "react";
 import MenuItem from '../../components/MenuItem/MenuItem.jsx';
+import formatPrice from '../../helpers/formatPrice';
 import axios from 'axios';
 
 
@@ -67,7 +68,7 @@ function Menu() {
                                             <MenuItem
                                                 itemName={item.name}
                                                 itemDescription={item.description}
-                                                itemPrice={item.price}
+                                                itemPrice={formatPrice(item.price)}
                                             />
                                         </li>
                                     )
@@ -80,7 +81,7 @@ function Menu() {
                 </section>
 
                 <aside>
-                    <Card height={500} width={250}>
+                    <Card height={600} width={250}>
                         <h3>Mijn bestelling</h3>
                         <Button buttonText="Bestellen"/>
                     </Card>
