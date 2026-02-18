@@ -1,7 +1,7 @@
 import './Menu.css';
 import Card from '../../components/Card/Card.jsx';
 import Button from '../../components/Button/Button.jsx';
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import MenuItem from '../../components/MenuItem/MenuItem.jsx';
 import formatPrice from '../../helpers/formatPrice';
 import FilterBar from '../../components/FilterBar/FilterBar.jsx';
@@ -12,6 +12,9 @@ function Menu() {
     const [menu, setMenu] = useState([]);
     const [loading, toggleLoading] = useState(false);
     const [error, toggleError] = useState(false);
+    const [isVegetarian, setIsVegetarian] = useState(false);
+    const [selectedCategories, setSelectedCategories] = useState([]);
+    const [priceSort, setPriceSort] = useState(null);
 
     useEffect(() => {
         const controller = new AbortController();
@@ -29,7 +32,6 @@ function Menu() {
                 });
                 console.log("Menu items geladen")
                 setMenu(response.data);
-                console.log(response.data);
             } catch (e) {
                 if (axios.isCancel(e)) {
                     console.log('Request geannuleerd:', e);
@@ -50,21 +52,55 @@ function Menu() {
         };
     },  [])
 
+    const filteredMenu = useMemo(() => {
+        let result = [...menu];
+
+        if (selectedCategories.length > 0) {
+            result = result.filter((item) => {
+                return selectedCategories.includes(item.categoryId);
+            })
+        }
+
+        if (isVegetarian) {
+            result = result.filter((item) => {
+                return item.vegetarian;
+            })
+        }
+
+        if (priceSort === "ascending") {
+            result = result.sort((a, b) => a.price - b.price);
+        }
+
+        if (priceSort === "descending") {
+            result = result.sort((a, b) => b.price - a.price);
+        }
+
+        return result;
+    }, [menu, selectedCategories, isVegetarian, priceSort]);
+
     return (
         <>
             {error && <p>Er is iets misgegaan bij het ophalen van de data. Probeer het later nog eens.</p>}
             {loading && <p>Loading...</p>}
             <div className="menu-page-container">
                 <div className="left-side-container">
-                    <FilterBar/>
+                    <FilterBar
+                        isVegetarian={isVegetarian}
+                        setIsVegetarian={setIsVegetarian}
+                        selectedCategories={selectedCategories}
+                        setSelectedCategories={setSelectedCategories}
+                        priceSort={priceSort}
+                        setPriceSort={setPriceSort}
+                    />
+
                     <section>
                         <h1>Menu</h1>
                         <hr className="menu-divider"/>
 
-                        {menu.length > 0 ?
+                        {filteredMenu.length > 0 ?
                             <ul className="menu-list">
                                 {
-                                    menu.map((item) => {
+                                    filteredMenu.map((item) => {
                                         return (
                                             <li key={item.id}>
                                                 <MenuItem

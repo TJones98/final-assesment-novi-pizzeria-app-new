@@ -1,7 +1,7 @@
 .filter-bar {
     border: 1px solid var(--color-primary);
     border-radius: 15px;
-    padding: 0.5rem 2rem;
+    padding: 0.5rem 2.5rem;
 }
 
 .filters-container {
@@ -10,12 +10,23 @@
     justify-content: space-between;
 }
 
-.radio-buttons {
+.filter-bar-header {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.filter-bar-header button {
+    align-self: center;
+    padding: 0.5rem;
+}
+
+.price-veg-filter {
     display: flex;
     flex-direction: column;
 }
 
-.radio-buttons label {
+.price-veg-filter label {
     display: flex;
     flex-direction: row;
     align-items: center;
