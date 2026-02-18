@@ -1,0 +1,41 @@
+.filter-bar {
+    border: 1px solid var(--color-primary);
+    border-radius: 15px;
+    padding: 0.5rem 2rem;
+}
+
+.filters-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.radio-buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+.radio-buttons label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.category-filter {
+    width: 175px;
+    margin-right: 0;
+}
+
+.checkboxes {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 0 1rem;
+}
+
+.checkboxes label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+}
