@@ -10,7 +10,7 @@ function HomePage() {
     const navigate = useNavigate();
 
     function redirectToMenu() {
-        navigate('/menu');
+        navigate('/place-order-1');
     }
 
     return (

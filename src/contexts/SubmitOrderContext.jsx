@@ -16,7 +16,7 @@ function SubmitOrderContextProvider ({ children }) {
                     orderId: null,
                     menuId: item.id,
                     menuItemName: item.name,
-                    unitPrice: item.price,
+                    unitPrice: item.price
                 },
             ]
         }));

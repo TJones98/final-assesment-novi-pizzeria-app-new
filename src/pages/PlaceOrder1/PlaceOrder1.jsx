@@ -34,7 +34,7 @@ function PlaceOrder1() {
                     },
                     signal: controller.signal,
                 });
-                console.log("PlaceOrder1 items geladen")
+                console.log("Menu items geladen")
                 setMenu(response.data);
             } catch (e) {
                 if (axios.isCancel(e)) {
@@ -82,7 +82,12 @@ function PlaceOrder1() {
         return result;
     }, [menu, selectedCategories, isVegetarian, priceSort]);
 
-    console.log(newOrder);
+    console.log(newOrder)
+
+    function saveOrderToStorage() {
+        sessionStorage.setItem('orderItems', JSON.stringify(newOrder));
+        console.log("Order saved to sessionStorage:", newOrder);
+    }
 
     return (
         <>
@@ -143,7 +148,10 @@ function PlaceOrder1() {
                         })}
                         </ul>
                         <p><strong>TOTAAL</strong> - €{formatPrice(calculateTotalOrderPrice(newOrder.orderItems))}</p>
-                        <Button buttonText="Ga verder met bestellen"/>
+                        <Button buttonType="button"
+                                buttonText="Ga verder met bestellen"
+                                onClick={saveOrderToStorage}
+                        />
                     </Card>
                 </aside>
 
