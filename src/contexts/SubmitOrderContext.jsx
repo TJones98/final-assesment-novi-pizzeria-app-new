@@ -31,7 +31,7 @@ function SubmitOrderContextProvider ({ children }) {
     }
 
     return (
-        <SubmitOrderContext.Provider value={{ newOrder, setOrderItems, deleteOrderItem }}>
+        <SubmitOrderContext.Provider value={{ newOrder, setNewOrder, setOrderItems, deleteOrderItem }}>
             {children}
         </SubmitOrderContext.Provider>
     )

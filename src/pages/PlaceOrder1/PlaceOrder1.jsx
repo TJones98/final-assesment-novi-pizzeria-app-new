@@ -9,6 +9,7 @@ import calculateTotalOrderPrice from '../../helpers/calculateTotalOrderPrice';
 import DeleteButton from '../../components/DeleteButton/DeleteButton.jsx';
 import {SubmitOrderContext} from "../../contexts/SubmitOrderContext.jsx";
 import axios from 'axios';
+import {useNavigate} from "react-router-dom";
 
 
 function PlaceOrder1() {
@@ -18,10 +19,16 @@ function PlaceOrder1() {
     const [isVegetarian, setIsVegetarian] = useState(false);
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [priceSort, setPriceSort] = useState(null);
-    const {newOrder, setOrderItems, deleteOrderItem} = useContext(SubmitOrderContext);
+    const {newOrder, setNewOrder, setOrderItems, deleteOrderItem} = useContext(SubmitOrderContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const controller = new AbortController();
+        const savedOrder = JSON.parse(sessionStorage.getItem('orderItems'));
+        if (savedOrder) {
+            setNewOrder ({
+                orderItems: [...savedOrder.orderItems ]
+        })}
 
         async function fetchMenu() {
             toggleLoading(true);
@@ -82,11 +89,10 @@ function PlaceOrder1() {
         return result;
     }, [menu, selectedCategories, isVegetarian, priceSort]);
 
-    console.log(newOrder)
-
-    function saveOrderToStorage() {
+    function saveOrderItems() {
         sessionStorage.setItem('orderItems', JSON.stringify(newOrder));
         console.log("Order saved to sessionStorage:", newOrder);
+        navigate('/place-order-3');
     }
 
     return (
@@ -150,7 +156,7 @@ function PlaceOrder1() {
                         <p><strong>TOTAAL</strong> - €{formatPrice(calculateTotalOrderPrice(newOrder.orderItems))}</p>
                         <Button buttonType="button"
                                 buttonText="Ga verder met bestellen"
-                                onClick={saveOrderToStorage}
+                                onClick={saveOrderItems}
                         />
                     </Card>
                 </aside>

@@ -1,20 +1,41 @@
 import PageTitle from "../../components/PageTitle/PageTitle.jsx";
 import Card from '../../components/Card/Card.jsx';
+import formatPrice from '../../helpers/formatPrice.js'
+import Button from '../../components/Button/Button.jsx';
+import {useNavigate} from "react-router-dom";
 import './PlaceOrder3.css';
-import {SubmitOrderContext} from "../../contexts/SubmitOrderContext.jsx";
-import {useContext} from "react";
+
 
 function PlaceOrder3() {
-    const {newOrder} = useContext(SubmitOrderContext)
+    const navigate = useNavigate();
+    const orderItems = JSON.parse(sessionStorage.getItem('orderItems'))
+    console.log('Order items loaded')
 
-    console.log(newOrder);
+    function sendToPlaceOrderOne() {
+        navigate("/place-order-1")
+    }
 
     return (
         <>
             <PageTitle title='Bestellen' subtitle='Ik ga'/>
             <div className="order-details-cards">
-                <Card>
-                    <h5>Mijn bestelling</h5>
+                <Card width={300} height={400}>
+                    <h4>Mijn bestelling</h4>
+                    {orderItems && orderItems.orderItems.length > 0 ? (
+                    <ul>
+                        {orderItems.orderItems.map((item) => (
+                            <li key={item.orderItemsId}>
+                                <p>{item.menuItemName} - €{formatPrice(item.unitPrice)}</p>
+                            </li>
+                        ))}
+                    </ul>
+                    ) : (
+                        <p>Geen items gevonden</p>
+                    )}
+                    <Button
+                        buttonText="Wijzig bestelling"
+                        onClick={sendToPlaceOrderOne}
+                    />
                 </Card>
                 <Card>
                     <p>klant details</p>
