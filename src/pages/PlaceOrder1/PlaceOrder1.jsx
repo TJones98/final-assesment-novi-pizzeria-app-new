@@ -1,20 +1,24 @@
-import './Menu.css';
+import './PlaceOrder1.css';
 import Card from '../../components/Card/Card.jsx';
 import Button from '../../components/Button/Button.jsx';
-import {useEffect, useMemo, useState} from "react";
+import {useContext, useEffect, useMemo, useState} from "react";
 import MenuItem from '../../components/MenuItem/MenuItem.jsx';
 import formatPrice from '../../helpers/formatPrice';
 import FilterBar from '../../components/FilterBar/FilterBar.jsx';
+import calculateTotalOrderPrice from '../../helpers/calculateTotalOrderPrice';
+import DeleteButton from '../../components/DeleteButton/DeleteButton.jsx';
+import {SubmitOrderContext} from "../../contexts/SubmitOrderContext.jsx";
 import axios from 'axios';
 
 
-function Menu() {
+function PlaceOrder1() {
     const [menu, setMenu] = useState([]);
     const [loading, toggleLoading] = useState(false);
     const [error, toggleError] = useState(false);
     const [isVegetarian, setIsVegetarian] = useState(false);
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [priceSort, setPriceSort] = useState(null);
+    const {newOrder, setOrderItems, deleteOrderItem} = useContext(SubmitOrderContext);
 
     useEffect(() => {
         const controller = new AbortController();
@@ -30,7 +34,7 @@ function Menu() {
                     },
                     signal: controller.signal,
                 });
-                console.log("Menu items geladen")
+                console.log("PlaceOrder1 items geladen")
                 setMenu(response.data);
             } catch (e) {
                 if (axios.isCancel(e)) {
@@ -78,6 +82,8 @@ function Menu() {
         return result;
     }, [menu, selectedCategories, isVegetarian, priceSort]);
 
+    console.log(newOrder);
+
     return (
         <>
             {error && <p>Er is iets misgegaan bij het ophalen van de data. Probeer het later nog eens.</p>}
@@ -107,6 +113,7 @@ function Menu() {
                                                     itemName={item.name}
                                                     itemDescription={item.description}
                                                     itemPrice={formatPrice(item.price)}
+                                                    handleClick={() => setOrderItems(item)}
                                                 />
                                             </li>
                                         )
@@ -122,7 +129,21 @@ function Menu() {
                 <aside>
                     <Card height={600} width={250}>
                         <h3>Mijn bestelling</h3>
-                        <Button buttonText="Bestellen"/>
+                        <ul>
+                        {newOrder.orderItems.map((orderItem) => {
+                            return <li key={orderItem.orderItemsId}>
+                                <span className='order-item-name'>
+                                    <DeleteButton
+                                        handleClick={() => deleteOrderItem(orderItem.orderItemsId)}
+                                    />
+                                    <strong>{orderItem.menuItemName}</strong>
+                                    <p>€{formatPrice(orderItem.unitPrice)}</p>
+                                </span>
+                            </li>
+                        })}
+                        </ul>
+                        <p><strong>TOTAAL</strong> - €{formatPrice(calculateTotalOrderPrice(newOrder.orderItems))}</p>
+                        <Button buttonText="Ga verder met bestellen"/>
                     </Card>
                 </aside>
 
@@ -131,4 +152,4 @@ function Menu() {
     )
 }
 
-export default Menu;
+export default PlaceOrder1;

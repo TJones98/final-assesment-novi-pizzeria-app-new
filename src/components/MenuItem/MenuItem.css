@@ -3,3 +3,14 @@
     flex-direction: column;
     gap: 0;
 }
+
+.menu-item button {
+    width: 50px;
+    height: 50px;
+    border-radius: 0 0 8px 0;
+    font-size: 2rem;
+    padding: 0.25rem;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}

@@ -24,3 +24,10 @@
     width: 700px;
     gap: 2rem;
 }
+
+.order-item-name {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}

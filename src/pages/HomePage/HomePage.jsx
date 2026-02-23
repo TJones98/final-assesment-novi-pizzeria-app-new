@@ -3,9 +3,15 @@ import PageTitle from '../../components/pageTitle/PageTitle.jsx';
 import Button from '../../components/button/Button.jsx';
 import formatListZipCodes from '../../helpers/formatListZipCodes.js';
 import formatDeliveryTimes from '../../helpers/formatListDeliveryTimes/formatListDeliveryTimes.jsx';
+import {useNavigate} from 'react-router-dom';
 import './HomePage.css';
 
 function HomePage() {
+    const navigate = useNavigate();
+
+    function redirectToMenu() {
+        navigate('/menu');
+    }
 
     return (
         <>
@@ -24,7 +30,7 @@ function HomePage() {
                         Wij bezorgen binnen de volgende postcodes:
                         {formatListZipCodes()}
                     </p>
-                    <Button buttonType="button" buttonText="Nieuwe bestelling"/>
+                    <Button buttonType="button" buttonText="Nieuwe bestelling" onClick={redirectToMenu}/>
                 </Card>
                 <Card width={550} height={450} fontSize={20} alignItems="center">
                     <h3>Bezorgtijden</h3>

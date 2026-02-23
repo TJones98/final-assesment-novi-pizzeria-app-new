@@ -1,14 +1,18 @@
 import Card from '../../components/Card/Card.jsx';
 import './MenuItem.css'
+import Button from "../Button/Button.jsx";
 
-function MenuItem({itemName, itemDescription, itemPrice}) {
+function MenuItem({itemName, itemDescription, itemPrice, handleClick}) {
     return (
         <Card width={325} height={225}>
             <div className="menu-item">
-                <h4>{itemName}</h4>
-                <p>{itemDescription}</p>
-                <br/>
-                <h5>€{itemPrice}</h5>
+                <span className="menu-item-text">
+                    <h4>{itemName}</h4>
+                    <p>{itemDescription}</p>
+                    <br/>
+                    <h5>€{itemPrice}</h5>
+                </span>
+                <Button buttonType="button" buttonText="+" onClick={handleClick}/>
             </div>
         </Card>
     )

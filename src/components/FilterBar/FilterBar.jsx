@@ -10,9 +10,6 @@ function FilterBar({
     setPriceSort
 }) {
 
-
-
-
     return (
         <section className="filter-bar">
             <span className="filter-bar-header">
