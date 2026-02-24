@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Grand+Hotel&family=Lato:wght@400;700&display=swap');
 
+/***OVERKOEPELENDE STYLING***/
+
 :root {
     --color-main-bg: #F7E9CE;
     --color-secondary-bg: #FFFFF;
@@ -34,10 +36,46 @@ main {
     width: 100vw;
 }
 
+/***COMPONENTEN***/
+
 button {
     font-family: "Lato", sans-serif;
     font-size: 1rem;
 }
+
+
+/***FORMULIEREN***/
+
+fieldset {
+    border: 1px solid var(--color-primary);
+    border-radius: 15px;
+}
+
+input {
+    border: 1px solid var(--color-primary);
+    font-family: "Lato", sans-serif;
+    color: var(--color-contrast-dark);
+    padding-left: 0.5rem;
+}
+
+legend {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+/***LINKS***/
+
+a {
+    font-family: "Lato", sans-serif;
+    color: var(--color-contrast-dark);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--color-contrast-light);
+}
+
+/***TYPOGRAFIE***/
 
 h1, h2, h3 {
     font-family: "Grand Hotel", cursive;
@@ -81,20 +119,8 @@ small {
     font-size: 0.5rem;
 }
 
-a {
-    font-family: "Lato", sans-serif;
-    color: var(--color-contrast-dark);
-    text-decoration: none;
-}
-
-a:hover {
-    color: var(--color-contrast-light);
-}
-
-img {
-    width: 100%;
-}
-
 .contrast-text {
     color: var(--color-contrast-light);
 }
+
+
