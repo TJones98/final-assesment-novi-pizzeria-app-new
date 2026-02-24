@@ -5,8 +5,8 @@ export const deliveryArea = [
 export const deliveryTimes = [
     {id: 'WDMO', name: 'Maandag', openingHours: 'Gesloten'},
     {id: 'WDTU', name: 'Dinsdag', openingHours: 'Gesloten'},
-    {id: 'WDWE', name: 'Woensdag', openingHours: '17:30-20:30'},
-    {id: 'WDTH', name: 'Donderdag', openingHours: '17:30-20:30'},
+    {id: 'WDWE', name: 'Woensdag', openingHours: '18:00-20:00'},
+    {id: 'WDTH', name: 'Donderdag', openingHours: '18:00-20:00'},
     {id: 'WDFR', name: 'Vrijdag', openingHours: '17:00-21:00'},
     {id: 'WDSA', name: 'Zaterdag', openingHours: '17:00-21:00'},
     {id: 'WDSU', name: 'Zondag', openingHours: '17:00-21:00'},

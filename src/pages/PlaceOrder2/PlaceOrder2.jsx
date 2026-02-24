@@ -1,16 +1,23 @@
 import PageTitle from '../../components/PageTitle/PageTitle.jsx'
 import Card from '../../components/Card/Card.jsx'
 import InputField from '../../components/InputField/InputField.jsx'
-import { useForm } from 'react-hook-form';
+import TimeslotSelecter from '../../components/TimeslotSelecter/TimeslotSelecter'
+import { useForm, Controller } from 'react-hook-form';
 import React from "react";
 import Button from "../../components/Button/Button.jsx";
-import {deliveryArea} from "../../constants/restaurant-data.js";
+import ReactDatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import './PlaceOrder2.css'
 
 function PlaceOrder2() {
     const { register,
         handleSubmit,
-        formState: { errors}} = useForm();
+        formState: { errors},
+        control,
+        watch
+    } = useForm();
+
+    const watchSelectedReferrer = watch('orderDate');
 
     function handleFormSubmit(data) {
         console.log(data);
@@ -27,8 +34,39 @@ function PlaceOrder2() {
     return (
         <>
             <PageTitle title="Bestellen" subtitle="Ik ga" />
+
             <Card width={800}>
                 <form className="customer-data-form" onSubmit={handleSubmit(handleFormSubmit)}>
+
+                    <fieldset className="date-timeslot">
+                        <legend>Kies leverdatum en -tijd</legend>
+
+                        <div className="date-timeslot-fields">
+                            <Controller
+                                name="orderDate"
+                                control={control}
+                                rules={{ required: "Dit veld is verplicht" }}
+                                render={({ field }) => (
+                                    <ReactDatePicker
+                                        selected={field.value}
+                                        onChange={field.onChange}
+                                        filterDate={(date) => date.getDay() !== 1 && date.getDay() !== 2}
+                                        // geselecteerde datum kan niet een maandag (1) of dinsdag (2) zijn, want dan is het restaurant gesloten
+                                        placeholderText="Selecteer eerst een leverdatum"
+                                        dateFormat="dd-MM-yyyy"
+                                        minDate={new Date()}
+                                        // minDate zorgt ervoor dat er niet een datum in het verleden geselecteerd kan worden
+                                    />
+                                )}
+                            />
+                            {errors.orderDate && <p className="contrast-text">{errors.orderDate.message}</p>}
+
+                            {/*Laad keuzemenu timeslots pas als datum geselecteerd is.*/}
+                            {watchSelectedReferrer && <TimeslotSelecter date={watchSelectedReferrer} />}
+                        </div>
+
+                    </fieldset>
+
                     <fieldset className="personalia">
                         <legend>Jouw gegevens:</legend>
                         <div className="name-and-email-fields">

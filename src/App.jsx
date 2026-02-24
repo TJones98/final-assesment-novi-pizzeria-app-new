@@ -12,12 +12,10 @@ import OrderDetail from './pages/OrderDetail/OrderDetail.jsx';
 import Navigation from './components/navigation/Navigation.jsx';
 import Footer from "./components/footer/Footer.jsx";
 import {AuthContext} from "./contexts/AuthContext.jsx";
-import {SubmitOrderContext} from "./contexts/SubmitOrderContext.jsx";
 
 
 function App() {
     const {isAuth} = useContext(AuthContext);
-    const {newOrder} = useContext(SubmitOrderContext)
 
     return (
         <>

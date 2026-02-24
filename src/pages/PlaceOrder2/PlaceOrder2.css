@@ -7,16 +7,28 @@
     gap: 1.5rem;
 }
 
-.customer-data-form > button {
-    width: 20%;
-}
-
-.personalia {
+.customer-data-form > fieldset {
+    width: 100%;
     padding: 2rem;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
 }
+
+.customer-data-form > button {
+    width: 20%;
+}
+
+/*.date-timeslot {*/
+/*    width: 100%;*/
+/*}*/
+
+/*.personalia {*/
+/*    padding: 2rem;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    gap: 1.5rem;*/
+/*}*/
 
 .name-and-email-fields {
     display: flex;
@@ -36,4 +48,9 @@
 .adres-fields > * {
     flex: 1 1 200px;
     min-width: 200px;
+}
+
+.react-datepicker__input-container input {
+    height: 2.25rem;
+    width: 250px;
 }
