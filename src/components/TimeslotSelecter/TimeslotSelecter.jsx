@@ -1,11 +1,15 @@
-function TimeslotSelecter({ date }) {
+function TimeslotSelecter({ date, register }) {
     const selectedDate = date.getDay();
 
     return (
         <>
             <label htmlFor="timeslot">Kies een tijdslot:</label>
 
-            <select name="timeslot" id="timeslot">
+            <select
+                name="timeslot"
+                id="timeslot"
+                {...register("timeslot", { required: "Dit veld is verplicht" })}
+            >
                 {/*Laat deze opties alleen zien als het NIET een woensdag of een donderdag is */}
                 {selectedDate !== 3 && selectedDate !== 4 && (
                     <>

@@ -62,7 +62,12 @@ function PlaceOrder2() {
                             {errors.orderDate && <p className="contrast-text">{errors.orderDate.message}</p>}
 
                             {/*Laad keuzemenu timeslots pas als datum geselecteerd is.*/}
-                            {watchSelectedReferrer && <TimeslotSelecter date={watchSelectedReferrer} />}
+                            {watchSelectedReferrer && (
+                                <>
+                                    <TimeslotSelecter date={watchSelectedReferrer} register={register} />
+                                    {errors.timeslot && <p className="contrast-text">{errors.timeslot.message}</p>}
+                                </>
+                            )}
                         </div>
 
                     </fieldset>
