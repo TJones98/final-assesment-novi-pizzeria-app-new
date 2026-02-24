@@ -4,6 +4,7 @@ import InputField from '../../components/InputField/InputField.jsx'
 import { useForm } from 'react-hook-form';
 import React from "react";
 import Button from "../../components/Button/Button.jsx";
+import {deliveryArea} from "../../constants/restaurant-data.js";
 import './PlaceOrder2.css'
 
 function PlaceOrder2() {

@@ -1,4 +1,4 @@
-import './PlaceOrder1.css';
+import './PlaceOrderOne.css';
 import Card from '../../components/Card/Card.jsx';
 import Button from '../../components/Button/Button.jsx';
 import {useContext, useEffect, useMemo, useState} from "react";
@@ -12,7 +12,7 @@ import axios from 'axios';
 import {useNavigate} from "react-router-dom";
 
 
-function PlaceOrder1() {
+function PlaceOrderOne() {
     const [menu, setMenu] = useState([]);
     const [loading, toggleLoading] = useState(false);
     const [error, toggleError] = useState(false);
@@ -166,4 +166,4 @@ function PlaceOrder1() {
     )
 }
 
-export default PlaceOrder1;
+export default PlaceOrderOne;
