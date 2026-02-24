@@ -55,15 +55,18 @@ function LoginPage() {
                             labelAndId="email-field"
                             register={register}
                             registerTitle="email"
+                            required={true}
+                            errors={errors.email && <p className="contrast-text">{errors.email.message}</p>}
+                            placeholderText="naam@palermo.nl"
                     />
-                    {errors.email && <p className="contrast-text">{errors.email.message}</p>}
                     <InputField type="password"
                                 labelText="Wachtwoord:"
                                 labelAndId="password-field"
                                 register={register}
                                 registerTitle="password"
+                                required={true}
+                                errors={errors.password && <p className="contrast-text">{errors.password.message}</p>}
                     />
-                    {errors.password && <p className="contrast-text">{errors.password.message}</p>}
                     <Button buttonType="submit" buttonText="Login" disabled={loading === true}/>
                 </form>
             </Card>
