@@ -19,16 +19,12 @@
     width: 20%;
 }
 
-/*.date-timeslot {*/
-/*    width: 100%;*/
-/*}*/
-
-/*.personalia {*/
-/*    padding: 2rem;*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    gap: 1.5rem;*/
-/*}*/
+.date-timeslot-fields {
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+    align-items: center;
+}
 
 .name-and-email-fields {
     display: flex;

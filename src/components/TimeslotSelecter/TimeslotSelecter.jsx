@@ -1,4 +1,5 @@
 function TimeslotSelecter({ date, register }) {
+    // haal dag van de week op (0=zondag, 6=zaterdag)
     const selectedDate = date.getDay();
 
     return (

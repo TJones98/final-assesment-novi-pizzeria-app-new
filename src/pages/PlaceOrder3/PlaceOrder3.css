@@ -6,3 +6,9 @@
     justify-content: center;
     gap: 5rem;
 }
+
+.order-details-list > li {
+    display: flex;
+    flex-direction: row;
+    gap: 0.25rem;
+}

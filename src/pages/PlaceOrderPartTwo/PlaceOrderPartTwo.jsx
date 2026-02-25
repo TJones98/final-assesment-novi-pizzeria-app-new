@@ -3,13 +3,17 @@ import Card from '../../components/Card/Card.jsx'
 import InputField from '../../components/InputField/InputField.jsx'
 import TimeslotSelecter from '../../components/TimeslotSelecter/TimeslotSelecter'
 import { useForm, Controller } from 'react-hook-form';
-import React from "react";
+import React, {useContext} from "react";
+import {useNavigate} from "react-router-dom";
+import {useEffect} from "react";
 import Button from "../../components/Button/Button.jsx";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import './PlaceOrder2.css'
+import './PlaceOrderPartTwo.css'
+import {SubmitOrderContext} from "../../contexts/SubmitOrderContext.jsx";
 
-function PlaceOrder2() {
+function PlaceOrderPartTwo() {
+    const {newOrder, setNewOrder, setCustomer, setOrderDateTimeslot} = useContext(SubmitOrderContext);
     const { register,
         handleSubmit,
         formState: { errors},
@@ -19,8 +23,30 @@ function PlaceOrder2() {
 
     const watchSelectedReferrer = watch('orderDate');
 
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const savedCustomer = JSON.parse(sessionStorage.getItem('customerDetails'));
+        const savedOrderDetails = JSON.parse(sessionStorage.getItem('orders'));
+
+        setNewOrder((prevOrder) => ({
+            ...prevOrder,
+            orders: savedOrderDetails || {},
+            customerDetails: savedCustomer || {}
+        }));
+        console.log(newOrder);
+    }, []);
+
+    useEffect(() => {
+        sessionStorage.setItem('customerDetails', JSON.stringify(newOrder.customerDetails));
+        sessionStorage.setItem('orders', JSON.stringify(newOrder.orders));
+    }, [newOrder.customerDetails, newOrder.orders])
+
     function handleFormSubmit(data) {
-        console.log(data);
+        const { orderDate, timeslot, ...customerData } = data;
+        setCustomer(customerData);
+        setOrderDateTimeslot({ orderDate, timeslot });
+        navigate('/place-order-3');
     }
 
     function validateEmail(value) {
@@ -69,7 +95,6 @@ function PlaceOrder2() {
                                 </>
                             )}
                         </div>
-
                     </fieldset>
 
                     <fieldset className="personalia">
@@ -79,10 +104,13 @@ function PlaceOrder2() {
                                 labelText="Naam:"
                                 labelAndId="name-field"
                                 register={register}
-                                registerTitle="name"
+                                registerTitle="customerName"
                                 required={true}
                                 errors={errors.name && <p className="contrast-text">{errors.name.message}</p>}
                                 placeholderText="Voor- en achternaam"
+                                defaultValue={
+                                    newOrder.customerDetails && newOrder.customerDetails.customerName
+                                }
                             />
 
                             <InputField type="text"
@@ -94,18 +122,24 @@ function PlaceOrder2() {
                                         errors={errors.email && <p className="contrast-text">{errors.email.message}</p>}
                                         placeholderText="naam@emailprovider.com"
                                         validate={validateEmail}
+                                        defaultValue={
+                                            newOrder.customerDetails && newOrder.customerDetails.email
+                                        }
                             />
                         </div>
                         <strong>Afleveradres:</strong>
                         <div className="adres-fields">
                             <InputField type="text"
                                         labelText="Postcode:"
-                                        labelAndId="zipcode-field"
+                                        labelAndId="zip-code-field"
                                         register={register}
-                                        registerTitle="zipcode"
+                                        registerTitle="zipCode"
                                         required={true}
-                                        errors={errors.zipcode && <p className="contrast-text">{errors.zipcode.message}</p>}
+                                        errors={errors.zipCode && <p className="contrast-text">{errors.zipCode.message}</p>}
                                         placeholderText="1234AB"
+                                        defaultValue={
+                                            newOrder.customerDetails && newOrder.customerDetails.zipCode
+                                        }
                             />
                             <InputField type="number"
                                         labelText="Huisnummer:"
@@ -116,6 +150,9 @@ function PlaceOrder2() {
                                         errors={errors.houseNumber && <p className="contrast-text">{errors.houseNumber.message}</p>}
                                         placeholderText="1"
                                         min={1}
+                                        defaultValue={
+                                            newOrder.customerDetails && newOrder.customerDetails.houseNumber
+                                        }
                             />
                             <InputField type="text"
                                         labelText="Toevoeging:"
@@ -125,6 +162,9 @@ function PlaceOrder2() {
                                         required={false}
                                         errors={errors.houseNumber && <p className="contrast-text">{errors.houseNumber.message}</p>}
                                         placeholderText="Indien van toepassing"
+                                        defaultValue={
+                                            newOrder.customerDetails && newOrder.customerDetails.houseNumberAddition
+                                        }
                             />
                             <InputField type="text"
                                         labelText="Straat:"
@@ -134,6 +174,9 @@ function PlaceOrder2() {
                                         required={true}
                                         errors={errors.street && <p className="contrast-text">{errors.street.message}</p>}
                                         placeholderText="Straatweg"
+                                        defaultValue={
+                                            newOrder.customerDetails && newOrder.customerDetails.street
+                                        }
                             />
                             <InputField type="text"
                                         labelText="Plaats:"
@@ -143,6 +186,9 @@ function PlaceOrder2() {
                                         required={true}
                                         errors={errors.city && <p className="contrast-text">{errors.city.message}</p>}
                                         placeholderText="Utrecht"
+                                        defaultValue={
+                                            newOrder.customerDetails && newOrder.customerDetails.city
+                                        }
                             />
                         </div>
                     </fieldset>
@@ -156,4 +202,4 @@ function PlaceOrder2() {
     )
 }
 
-export default PlaceOrder2
+export default PlaceOrderPartTwo

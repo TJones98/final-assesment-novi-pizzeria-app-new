@@ -1,4 +1,4 @@
-import './PlaceOrderOne.css';
+import './PlaceOrderPartOne.css';
 import Card from '../../components/Card/Card.jsx';
 import Button from '../../components/Button/Button.jsx';
 import {useContext, useEffect, useMemo, useState} from "react";
@@ -12,7 +12,7 @@ import axios from 'axios';
 import {useNavigate} from "react-router-dom";
 
 
-function PlaceOrderOne() {
+function PlaceOrderPartOne() {
     const [menu, setMenu] = useState([]);
     const [loading, toggleLoading] = useState(false);
     const [error, toggleError] = useState(false);
@@ -90,8 +90,8 @@ function PlaceOrderOne() {
     }, [menu, selectedCategories, isVegetarian, priceSort]);
 
     function saveOrderItems() {
-        sessionStorage.setItem('orderItems', JSON.stringify(newOrder));
-        console.log("Order saved to sessionStorage:", newOrder);
+        sessionStorage.setItem('orderItems', JSON.stringify(newOrder.orderItems));
+        console.log("Order saved to sessionStorage:", newOrder.orderItems);
         navigate('/place-order-3');
     }
 
@@ -166,4 +166,4 @@ function PlaceOrderOne() {
     )
 }
 
-export default PlaceOrderOne;
+export default PlaceOrderPartOne;
