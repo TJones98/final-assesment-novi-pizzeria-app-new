@@ -7,7 +7,7 @@ import PageNotFound from './pages/PageNotFound.jsx';
 import StaffDashboard from './pages/StaffDashboard/StaffDashboard.jsx';
 import PlaceOrderPartOne from './pages/PlaceOrderPartOne/PlaceOrderPartOne.jsx';
 import PlaceOrderPartTwo from './pages/PlaceOrderPartTwo/PlaceOrderPartTwo.jsx';
-import PlaceOrder3 from './pages/PlaceOrder3/PlaceOrder3.jsx';
+import PlaceOrder3 from './pages/PlaceOrderPartThree/PlaceOrder3.jsx';
 import OrderDetail from './pages/OrderDetail/OrderDetail.jsx';
 import Navigation from './components/navigation/Navigation.jsx';
 import Footer from "./components/footer/Footer.jsx";

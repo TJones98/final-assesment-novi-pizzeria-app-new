@@ -27,7 +27,7 @@ function PlaceOrderPartOne() {
         const savedOrder = JSON.parse(sessionStorage.getItem('orderItems'));
         if (savedOrder) {
             setNewOrder ({
-                orderItems: [...savedOrder.orderItems ]
+                orderItems: [...savedOrder]
         })}
 
         async function fetchMenu() {
@@ -92,7 +92,7 @@ function PlaceOrderPartOne() {
     function saveOrderItems() {
         sessionStorage.setItem('orderItems', JSON.stringify(newOrder.orderItems));
         console.log("Order saved to sessionStorage:", newOrder.orderItems);
-        navigate('/place-order-3');
+        navigate('/place-order-2');
     }
 
     return (
