@@ -8,7 +8,7 @@ import formatJsonDate from "../../helpers/formatJsonDate.js";
 import './PlaceOrderPartThree.css';
 
 
-function PlaceOrder3() {
+function PlaceOrderPartThree() {
     const navigate = useNavigate();
     const orderItems = JSON.parse(sessionStorage.getItem('orderItems'))
     const customerDetails = JSON.parse(sessionStorage.getItem('customerDetails'));
@@ -112,4 +112,4 @@ function PlaceOrder3() {
     )
 }
 
-export default PlaceOrder3;
+export default PlaceOrderPartThree;

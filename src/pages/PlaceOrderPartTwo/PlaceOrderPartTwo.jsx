@@ -18,7 +18,8 @@ function PlaceOrderPartTwo() {
         handleSubmit,
         formState: { errors},
         control,
-        watch
+        watch,
+        reset
     } = useForm();
 
     const watchSelectedReferrer = watch('orderDate');
@@ -35,12 +36,26 @@ function PlaceOrderPartTwo() {
             customerDetails: savedCustomer || {}
         }));
         console.log(newOrder);
+
     }, []);
 
     useEffect(() => {
         sessionStorage.setItem('customerDetails', JSON.stringify(newOrder.customerDetails));
         sessionStorage.setItem('orders', JSON.stringify(newOrder.orders));
     }, [newOrder.customerDetails, newOrder.orders])
+
+    useEffect(() => {
+        let defaultValues = {};
+        defaultValues.customerName = newOrder.customerDetails.customerName;
+        defaultValues.email = newOrder.customerDetails.email;
+        defaultValues.zipCode = newOrder.customerDetails.zipCode;
+        defaultValues.houseNumber = newOrder.customerDetails.houseNumber;
+        defaultValues.houseNumberAddition = newOrder.customerDetails.houseNumberAddition;
+        defaultValues.street = newOrder.customerDetails.street;
+        defaultValues.city = newOrder.customerDetails.city;
+        reset({ ...defaultValues });
+    }, []);
+
 
     function handleFormSubmit(data) {
         const { orderDate, timeslot, ...customerData } = data;
@@ -108,9 +123,6 @@ function PlaceOrderPartTwo() {
                                 required={true}
                                 errors={errors.name && <p className="contrast-text">{errors.name.message}</p>}
                                 placeholderText="Voor- en achternaam"
-                                defaultValue={
-                                    newOrder.customerDetails && newOrder.customerDetails.customerName
-                                }
                             />
 
                             <InputField type="text"
@@ -122,9 +134,6 @@ function PlaceOrderPartTwo() {
                                         errors={errors.email && <p className="contrast-text">{errors.email.message}</p>}
                                         placeholderText="naam@emailprovider.com"
                                         validate={validateEmail}
-                                        defaultValue={
-                                            newOrder.customerDetails && newOrder.customerDetails.email
-                                        }
                             />
                         </div>
                         <strong>Afleveradres:</strong>
@@ -137,9 +146,6 @@ function PlaceOrderPartTwo() {
                                         required={true}
                                         errors={errors.zipCode && <p className="contrast-text">{errors.zipCode.message}</p>}
                                         placeholderText="1234AB"
-                                        defaultValue={
-                                            newOrder.customerDetails && newOrder.customerDetails.zipCode
-                                        }
                             />
                             <InputField type="number"
                                         labelText="Huisnummer:"
@@ -150,9 +156,6 @@ function PlaceOrderPartTwo() {
                                         errors={errors.houseNumber && <p className="contrast-text">{errors.houseNumber.message}</p>}
                                         placeholderText="1"
                                         min={1}
-                                        defaultValue={
-                                            newOrder.customerDetails && newOrder.customerDetails.houseNumber
-                                        }
                             />
                             <InputField type="text"
                                         labelText="Toevoeging:"
@@ -162,9 +165,6 @@ function PlaceOrderPartTwo() {
                                         required={false}
                                         errors={errors.houseNumber && <p className="contrast-text">{errors.houseNumber.message}</p>}
                                         placeholderText="Indien van toepassing"
-                                        defaultValue={
-                                            newOrder.customerDetails && newOrder.customerDetails.houseNumberAddition
-                                        }
                             />
                             <InputField type="text"
                                         labelText="Straat:"
@@ -174,9 +174,6 @@ function PlaceOrderPartTwo() {
                                         required={true}
                                         errors={errors.street && <p className="contrast-text">{errors.street.message}</p>}
                                         placeholderText="Straatweg"
-                                        defaultValue={
-                                            newOrder.customerDetails && newOrder.customerDetails.street
-                                        }
                             />
                             <InputField type="text"
                                         labelText="Plaats:"
@@ -186,9 +183,6 @@ function PlaceOrderPartTwo() {
                                         required={true}
                                         errors={errors.city && <p className="contrast-text">{errors.city.message}</p>}
                                         placeholderText="Utrecht"
-                                        defaultValue={
-                                            newOrder.customerDetails && newOrder.customerDetails.city
-                                        }
                             />
                         </div>
                     </fieldset>

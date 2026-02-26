@@ -11,7 +11,6 @@ function InputField({
                         placeholderText,
                         min,
                         validate,
-                        defaultValue,
 
 }) {
     return (
@@ -20,7 +19,6 @@ function InputField({
                 {labelText}
                 <input type={type}
                        placeholder={placeholderText}
-                       defaultValue={defaultValue}
                        id={labelAndId}
                        min="1"
                        {...register(registerTitle, {
