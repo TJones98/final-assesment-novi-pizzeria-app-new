@@ -3,13 +3,19 @@ import {useForm} from "react-hook-form";
 import Button from "../../components/Button/Button";
 import './MenuDetail.css'
 import { useParams } from "react-router-dom";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 function MenuDetail() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [item, setItem] = useState(null);
-    const { register, setValue } = useForm();
+    const { register,
+        setValue,
+        handleSubmit,
+        formState: { errors}
+    } = useForm();
 
     useEffect(() => {
         async function fetchItem() {
@@ -25,16 +31,25 @@ function MenuDetail() {
                 setValue("description", response.data.description);
                 setValue("categoryId", response.data.categoryId);
                 setValue("vegetarian", response.data.vegetarian);
+                console.log("Item info ophalen succesvol:", response.data);
             } catch (e) {
-                console.error("Failed to fetch item:", e);
+                console.log("Item info ophalen mislukt:", e);
             }
         }
         fetchItem();
     }, [id, setValue]);
 
+    function handleFormSubmit(data) {
+        console.log(data);
+    }
+
+    function redirectToMenu() {
+        navigate("/menu");
+    }
+
     return (
         <article className="menu-detail-container">
-            <form className="menu-item-details">
+            <form className="menu-item-details" onSubmit={handleSubmit(handleFormSubmit)}>
                 <InputField
                     labelAndId="menu-item-name"
                     labelText="Naam gerecht:"
@@ -43,6 +58,7 @@ function MenuDetail() {
                     registerTitle="name"
                     required={true}
                     maxLength={20}
+                    errors={errors.name && <p className="contrast-text">{errors.name.message}</p>}
                 />
                 <InputField
                     labelAndId="item-price"
@@ -52,6 +68,8 @@ function MenuDetail() {
                     registerTitle="unitPrice"
                     required={true}
                     min={0}
+                    step="0.01"
+                    errors={errors.unitPrice && <p className="contrast-text">{errors.unitPrice.message}</p>}
                 />
                 <div className="divergent-input-fields">
                     <label htmlFor="item-description">
@@ -76,6 +94,7 @@ function MenuDetail() {
                             })}
                         >
                         </textarea>
+                        {errors.description && <p className="contrast-text">{errors.description.message}</p>}
                     </label>
                 </div>
                 <InputField
@@ -87,6 +106,8 @@ function MenuDetail() {
                     placeholderText="1 = pizza, 2 = pasta, 3 = bijgerecht, 4 = nagerecht"
                     min={0}
                     max={4}
+                    step={1}
+                    errors={errors.categoryId && <p className="contrast-text">{errors.categoryId.message}</p>}
                 />
                 <div className="divergent-input-fields">
                     <label htmlFor="vegetarian">
@@ -97,10 +118,10 @@ function MenuDetail() {
                         </select>
                     </label>
                 </div>
-                <Button buttonType="button" buttonText="Bevestig wijzigingen" onClick={testFunction}/>
+                <Button buttonType="submit" buttonText="Bevestig wijzigingen"/>
             </form>
             <div className="lower-buttons">
-                <Button buttonType="button" buttonText="Terug"/>
+                <Button buttonType="button" buttonText="Terug" onClick={redirectToMenu}/>
                 <Button buttonType="button" buttonText="Verwijder gerecht"/>
             </div>
         </article>
