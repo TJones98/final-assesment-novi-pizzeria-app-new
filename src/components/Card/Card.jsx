@@ -14,6 +14,7 @@ function Card({children, width, height, fontSize, alignItems}) {
         border: '8px solid var(--color-main-bg)',
         padding: 25,
         overflow: 'auto',
+        position: 'relative',
     }
 
     return (

@@ -1,0 +1,33 @@
+.menu-page-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.left-side-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.menu-divider {
+    border: 0.5px solid var(--color-primary);
+    width: 700px;
+    margin-bottom: 3rem;
+}
+
+.menu-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 700px;
+    gap: 2rem;
+}
+
+.order-item-name {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}

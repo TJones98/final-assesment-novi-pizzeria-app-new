@@ -1,0 +1,52 @@
+.customer-data-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.customer-data-form > fieldset {
+    width: 100%;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.customer-data-form > button {
+    width: 20%;
+}
+
+.date-timeslot-fields {
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.name-and-email-fields {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.adres-fields {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    gap: 1rem;
+}
+
+.adres-fields > * {
+    flex: 1 1 200px;
+    min-width: 200px;
+}
+
+.react-datepicker__input-container input {
+    height: 2.25rem;
+    width: 250px;
+}
