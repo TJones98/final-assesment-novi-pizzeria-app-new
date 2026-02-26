@@ -51,11 +51,13 @@ fieldset {
     border-radius: 15px;
 }
 
-input {
+input, textarea, select {
     border: 1px solid var(--color-primary);
     font-family: "Lato", sans-serif;
     color: var(--color-contrast-dark);
     padding-left: 0.5rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
 }
 
 legend {

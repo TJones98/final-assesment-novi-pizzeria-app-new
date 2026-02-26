@@ -9,6 +9,7 @@ import PlaceOrderPartOne from './pages/PlaceOrderPartOne/PlaceOrderPartOne.jsx';
 import PlaceOrderPartTwo from './pages/PlaceOrderPartTwo/PlaceOrderPartTwo.jsx';
 import PlaceOrderPartThree from './pages/PlaceOrderPartThree/PlaceOrderPartThree.jsx';
 import MenuPage from './pages/MenuPage/MenuPage.jsx';
+import MenuDetail from './pages/MenuDetail/MenuDetail.jsx';
 import OrderDetail from './pages/OrderDetail/OrderDetail.jsx';
 import Navigation from './components/navigation/Navigation.jsx';
 import Footer from "./components/footer/Footer.jsx";
@@ -34,6 +35,7 @@ function App() {
                     <Route path="/place-order-3" element={<PlaceOrderPartThree /> }/>
                     <Route path="/menu" element={<MenuPage /> }/>
                     {/*<Route path="/menu" element={userData && userData.roles.includes("admin") ? <MenuPage /> : <Navigate to="/login"/>}/>*/}
+                    <Route path="/menu/:id" element={<MenuDetail />} />
                 </Routes>
             </main>
             <Footer/>

@@ -4,6 +4,7 @@ import MenuItem from "../../components/MenuItem/MenuItem.jsx";
 import formatPrice from "../../helpers/formatPrice.js";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import FilterBar from "../../components/FilterBar/FilterBar";
+import {useNavigate} from "react-router-dom";
 import './MenuPage.css'
 
 function MenuPage() {
@@ -13,6 +14,7 @@ function MenuPage() {
     const [isVegetarian, setIsVegetarian] = useState(false);
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [priceSort, setPriceSort] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const controller = new AbortController();
@@ -76,6 +78,10 @@ function MenuPage() {
         return result;
     }, [menu, selectedCategories, isVegetarian, priceSort]);
 
+    function redirectToEditor(itemId) {
+        navigate(`/menu/${itemId}`);
+    }
+
     return (
         <>
             {error && <p>Er is iets misgegaan bij het ophalen van de data. Probeer het later nog eens.</p>}
@@ -103,6 +109,7 @@ function MenuPage() {
                                             itemDescription={item.description}
                                             itemPrice={formatPrice(item.price)}
                                             buttonText="✎"
+                                            handleClick={() => redirectToEditor(item.id, item.name)}
                                         />
                                     </li>
                                 )

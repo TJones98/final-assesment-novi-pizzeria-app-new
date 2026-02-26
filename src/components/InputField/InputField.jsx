@@ -10,7 +10,9 @@ function InputField({
                         errors,
                         placeholderText,
                         min,
+                        max,
                         validate,
+                        maxLength,
 
 }) {
     return (
@@ -20,10 +22,14 @@ function InputField({
                 <input type={type}
                        placeholder={placeholderText}
                        id={labelAndId}
-                       min="1"
+                       min={min}
+                       max={max}
+                       maxLength={maxLength}
                        {...register(registerTitle, {
                            required: required ? "Dit veld is verplicht" : false,
-                           min: min ? { value: min, message: `Het huisnummer kan niet lager dan ${min} zijn` } : undefined,
+                           min: min ? { value: min, message: `Het getal kan niet lager dan ${min} zijn` } : undefined,
+                           max: max ? { value: max, message: `Het getal kan niet lager dan ${max} zijn` } : undefined,
+                           maxLength: maxLength ? { value: maxLength, message: `Veld mag maximaal ${maxLength} karakters bevatten`} : undefined,
                            validate: validate
                        })}
                 />
