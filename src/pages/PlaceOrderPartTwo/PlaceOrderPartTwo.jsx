@@ -11,6 +11,7 @@ import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import './PlaceOrderPartTwo.css'
 import {SubmitOrderContext} from "../../contexts/SubmitOrderContext.jsx";
+import {deliveryArea} from "../../constants/restaurant-data.js"
 
 function PlaceOrderPartTwo() {
     const {newOrder, setNewOrder, setCustomer, setOrderDateTimeslot} = useContext(SubmitOrderContext);
@@ -69,6 +70,16 @@ function PlaceOrderPartTwo() {
             return true;
         } else {
             return "E-mailadres moet '@' bevatten"
+        }
+    }
+
+    function validateZipCode(value) {
+        const fourNumbersZipCode = Number(value.substring(0, 4));
+        console.log(fourNumbersZipCode);
+        if (deliveryArea.includes(fourNumbersZipCode)) {
+            return true;
+        } else {
+            return "Postcode valt niet binnen ons bezorggebied"
         }
     }
 
@@ -146,6 +157,7 @@ function PlaceOrderPartTwo() {
                                         required={true}
                                         errors={errors.zipCode && <p className="contrast-text">{errors.zipCode.message}</p>}
                                         placeholderText="1234AB"
+                                        validate={validateZipCode}
                             />
                             <InputField type="number"
                                         labelText="Huisnummer:"
