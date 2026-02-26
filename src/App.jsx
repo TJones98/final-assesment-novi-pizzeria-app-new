@@ -8,6 +8,7 @@ import StaffDashboard from './pages/StaffDashboard/StaffDashboard.jsx';
 import PlaceOrderPartOne from './pages/PlaceOrderPartOne/PlaceOrderPartOne.jsx';
 import PlaceOrderPartTwo from './pages/PlaceOrderPartTwo/PlaceOrderPartTwo.jsx';
 import PlaceOrderPartThree from './pages/PlaceOrderPartThree/PlaceOrderPartThree.jsx';
+import MenuPage from './pages/MenuPage/MenuPage.jsx';
 import OrderDetail from './pages/OrderDetail/OrderDetail.jsx';
 import Navigation from './components/navigation/Navigation.jsx';
 import Footer from "./components/footer/Footer.jsx";
@@ -16,6 +17,7 @@ import {AuthContext} from "./contexts/AuthContext.jsx";
 
 function App() {
     const {isAuth} = useContext(AuthContext);
+    const {userData} = useContext(AuthContext);
 
     return (
         <>
@@ -30,6 +32,8 @@ function App() {
                     <Route path="/place-order-1" element={<PlaceOrderPartOne />} />
                     <Route path="/place-order-2" element={<PlaceOrderPartTwo />} />
                     <Route path="/place-order-3" element={<PlaceOrderPartThree /> }/>
+                    <Route path="/menu" element={<MenuPage /> }/>
+                    {/*<Route path="/menu" element={userData && userData.roles.includes("admin") ? <MenuPage /> : <Navigate to="/login"/>}/>*/}
                 </Routes>
             </main>
             <Footer/>

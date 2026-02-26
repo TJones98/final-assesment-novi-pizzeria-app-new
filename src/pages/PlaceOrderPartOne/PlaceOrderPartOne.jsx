@@ -130,6 +130,7 @@ function PlaceOrderPartOne() {
                                                     itemName={item.name}
                                                     itemDescription={item.description}
                                                     itemPrice={formatPrice(item.price)}
+                                                    buttonText="+"
                                                     handleClick={() => setOrderItems(item)}
                                                 />
                                             </li>

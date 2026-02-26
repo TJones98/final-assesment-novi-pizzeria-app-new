@@ -2,7 +2,7 @@ import Card from '../../components/Card/Card.jsx';
 import './MenuItem.css'
 import Button from "../Button/Button.jsx";
 
-function MenuItem({itemName, itemDescription, itemPrice, handleClick}) {
+function MenuItem({itemName, itemDescription, itemPrice, buttonText, handleClick}) {
     return (
         <Card width={325} height={225}>
             <div className="menu-item">
@@ -12,7 +12,7 @@ function MenuItem({itemName, itemDescription, itemPrice, handleClick}) {
                     <br/>
                     <h5>€{itemPrice}</h5>
                 </span>
-                <Button buttonType="button" buttonText="+" onClick={handleClick}/>
+                <Button buttonType="button" buttonText={buttonText} onClick={handleClick}/>
             </div>
         </Card>
     )
