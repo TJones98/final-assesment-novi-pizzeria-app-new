@@ -6,14 +6,98 @@ import {useNavigate} from "react-router-dom";
 import OrderDetailsList from '../../components/OrderDetailsList/OrderDetailsList.jsx';
 import formatJsonDate from "../../helpers/formatJsonDate.js";
 import './PlaceOrderPartThree.css';
+import React, {useState} from "react";
+import axios from "axios";
 
 
 function PlaceOrderPartThree() {
-    const navigate = useNavigate();
     const orderItems = JSON.parse(sessionStorage.getItem('orderItems'))
     const customerDetails = JSON.parse(sessionStorage.getItem('customerDetails'));
     const orderDetails = JSON.parse(sessionStorage.getItem('orders'))
     console.log('Session storage data loaded')
+
+    const navigate = useNavigate();
+    const [error, toggleError] = useState(false);
+    const [loading, toggleLoading] = useState(false);
+    const [success, toggleSuccess] = useState(false);
+
+    function submitCompleteOrder() {
+        toggleLoading(true);
+        toggleError(false);
+        toggleSuccess(false);
+
+        const controller = new AbortController();
+
+        axios.post('https://novi-backend-api-wgsgz.ondigitalocean.app/api/customers', {
+            name: customerDetails.customerName,
+            email: customerDetails.email,
+            zipCode: customerDetails.zipCode,
+            houseNumber: customerDetails.houseNumber,
+            houseNumberAddition: customerDetails.houseNumberAddition,
+            street: customerDetails.street,
+            city: customerDetails.city
+        }, {
+            headers: {
+                'novi-education-project-id': 'fa5d53e3-5361-45a4-b01e-ae2b978120fa',
+                'Content-Type': 'application/json'
+            },
+            signal: controller.signal,
+        })
+            .then((customerResponse) => {
+                const customerId = customerResponse.data.id;
+                console.log("Nieuwe klant aangemaakt:", customerId);
+
+                return axios.post('https://novi-backend-api-wgsgz.ondigitalocean.app/api/orders', {
+                    customerId: customerId,
+                    orderDate: orderDetails.orderDate,
+                    timeslot: orderDetails.timeslot,
+                    completed: false
+                }, {
+                    headers: {
+                        'novi-education-project-id': 'fa5d53e3-5361-45a4-b01e-ae2b978120fa',
+                        'Content-Type': 'application/json'
+                    },
+                    signal: controller.signal,
+                });
+            })
+            .then((orderResponse) => {
+                const orderId = orderResponse.data.id;
+                console.log("Nieuwe order aangemaakt:", orderId);
+
+                const orderItemPromises = orderItems.map((item) => {
+                    return axios.post('https://novi-backend-api-wgsgz.ondigitalocean.app/api/orderItems', {
+                        id: item.orderItemsId,
+                        orderId: orderId,
+                        menuId: item.menuId,
+                        menuItemName: item.menuItemName,
+                        unitPrice: item.unitPrice
+                    }, {
+                        headers: {
+                            'novi-education-project-id': 'fa5d53e3-5361-45a4-b01e-ae2b978120fa',
+                            'Content-Type': 'application/json'
+                        },
+                        signal: controller.signal,
+                    });
+                });
+                console.log("Registreren order items gelukt", orderItemPromises);
+                toggleSuccess(true)
+                return Promise.all(orderItemPromises);
+            }).catch((e) => {
+                if (axios.isCancel(e)) {
+                    console.log("Request geannuleerd:", e);
+                } else {
+                    console.log("Versturen van data mislukt:", e);
+                    toggleError(true);
+                }
+            })
+            .finally(() => {
+                toggleLoading(false);
+            });
+
+        return function cleanup() {
+            controller.abort();
+        };
+    }
 
     function sendToPlaceOrderOne() {
         navigate("/place-order-1")
@@ -26,6 +110,9 @@ function PlaceOrderPartThree() {
     return (
         <>
             <PageTitle title='Bestellen' subtitle='Ik ga'/>
+            {loading && <strong className="contrast-text">loading...</strong>}
+            {error && <strong className="contrast-text">Fout bij het versturen van data. Probeer het nog eens.</strong>}
+            {success && <strong className="contrast-text">Bestelling succesvol verzonden! U kunt dit scherm nu sluiten.</strong>}
             <div className="order-details-cards">
                 <Card width={375} height={450}>
                     <div className="order-details-container">
@@ -46,6 +133,7 @@ function PlaceOrderPartThree() {
                         <Button
                             buttonText="Wijzig bestelling"
                             onClick={sendToPlaceOrderOne}
+                            disabled={loading === true}
                         />
                     </div>
                 </Card>
@@ -55,7 +143,7 @@ function PlaceOrderPartThree() {
                         {orderDetails ? (
                             <ul className="order-details-list">
                                 <OrderDetailsList
-                                    label="Datum:"
+                                    label="Leverdatum:"
                                     property={formatJsonDate(orderDetails.orderDate)}
                                 />
                                 <OrderDetailsList
@@ -104,10 +192,16 @@ function PlaceOrderPartThree() {
                             <Button
                                 buttonText="Wijzig gegevens"
                                 onClick={sendToPlaceOrderTwo}
+                                disabled={loading === true}
                             />
                     </div>
                 </Card>
             </div>
+            <Button
+                buttonText="Verzenden"
+                onClick={submitCompleteOrder}
+                disabled={loading === true}
+            />
         </>
     )
 }

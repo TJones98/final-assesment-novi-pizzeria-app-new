@@ -112,7 +112,7 @@ function OrderDetail() {
                             <ul>
                                 {orderItems.map((orderItem)  => {
                                     return <li key={orderItem.id}>
-                                        <p>{orderItem.menuItemName} - €{formatPrice(orderItem.unitPrice)})</p>
+                                        <p>{orderItem.menuItemName} - €{formatPrice(orderItem.unitPrice)}</p>
                                     </li>
                                 })}
                             </ul>

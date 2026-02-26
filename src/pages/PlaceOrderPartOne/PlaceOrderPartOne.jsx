@@ -21,10 +21,10 @@ function PlaceOrderPartOne() {
     const [priceSort, setPriceSort] = useState(null);
     const {newOrder, setNewOrder, setOrderItems, deleteOrderItem} = useContext(SubmitOrderContext);
     const navigate = useNavigate();
+    const savedOrder = JSON.parse(sessionStorage.getItem('orderItems'));
 
     useEffect(() => {
         const controller = new AbortController();
-        const savedOrder = JSON.parse(sessionStorage.getItem('orderItems'));
         if (savedOrder) {
             setNewOrder ({
                 orderItems: [...savedOrder]
@@ -92,8 +92,14 @@ function PlaceOrderPartOne() {
     function saveOrderItems() {
         sessionStorage.setItem('orderItems', JSON.stringify(newOrder.orderItems));
         console.log("Order saved to sessionStorage:", newOrder.orderItems);
-        navigate('/place-order-2');
+        if (savedOrder) {
+            navigate('/place-order-3')
+        }
+        else {
+            navigate('/place-order-2')
+        }
     }
+
 
     return (
         <>

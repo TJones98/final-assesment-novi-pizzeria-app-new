@@ -15,7 +15,6 @@ function SubmitOrderContextProvider ({ children }) {
                 ...prevOrder.orderItems,
                 {
                     orderItemsId: prevOrder.orderItems.length + 1,
-                    orderId: null,
                     menuId: item.id,
                     menuItemName: item.name,
                     unitPrice: item.price,
@@ -29,7 +28,6 @@ function SubmitOrderContextProvider ({ children }) {
             ...prevOrder,
             customerDetails:
                 {
-                    customerId: null,
                     customerName: customer.customerName,
                     email: customer.email,
                     zipCode: customer.zipCode,
@@ -46,11 +44,8 @@ function SubmitOrderContextProvider ({ children }) {
             ...prevOrder,
             orders:
                 {
-                    orderId: null,
-                    customerId: null,
                     orderDate: data.orderDate,
                     timeslot: data.timeslot,
-                    completed: false,
                 }
         }));
     }

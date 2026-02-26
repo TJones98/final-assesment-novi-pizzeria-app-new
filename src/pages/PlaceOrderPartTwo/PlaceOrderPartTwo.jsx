@@ -36,8 +36,6 @@ function PlaceOrderPartTwo() {
             orders: savedOrderDetails || {},
             customerDetails: savedCustomer || {}
         }));
-        console.log(newOrder);
-
     }, []);
 
     useEffect(() => {
@@ -46,16 +44,19 @@ function PlaceOrderPartTwo() {
     }, [newOrder.customerDetails, newOrder.orders])
 
     useEffect(() => {
-        let defaultValues = {};
-        defaultValues.customerName = newOrder.customerDetails.customerName;
-        defaultValues.email = newOrder.customerDetails.email;
-        defaultValues.zipCode = newOrder.customerDetails.zipCode;
-        defaultValues.houseNumber = newOrder.customerDetails.houseNumber;
-        defaultValues.houseNumberAddition = newOrder.customerDetails.houseNumberAddition;
-        defaultValues.street = newOrder.customerDetails.street;
-        defaultValues.city = newOrder.customerDetails.city;
-        reset({ ...defaultValues });
-    }, []);
+        if (newOrder.customerDetails) {
+            const defaultValues = {
+                customerName: newOrder.customerDetails.customerName,
+                email: newOrder.customerDetails.email,
+                zipCode: newOrder.customerDetails.zipCode,
+                houseNumber: newOrder.customerDetails.houseNumber,
+                houseNumberAddition: newOrder.customerDetails.houseNumberAddition,
+                street: newOrder.customerDetails.street,
+                city: newOrder.customerDetails.city,
+            };
+            reset(defaultValues);
+        }
+    }, [newOrder.customerDetails]);
 
 
     function handleFormSubmit(data) {
@@ -75,7 +76,6 @@ function PlaceOrderPartTwo() {
 
     function validateZipCode(value) {
         const fourNumbersZipCode = Number(value.substring(0, 4));
-        console.log(fourNumbersZipCode);
         if (deliveryArea.includes(fourNumbersZipCode)) {
             return true;
         } else {
