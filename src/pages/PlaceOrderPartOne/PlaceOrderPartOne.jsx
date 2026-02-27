@@ -35,7 +35,7 @@ function PlaceOrderPartOne() {
             toggleError(false);
 
             try {
-                const response = await axios.get('https://novi-backend-api-wgsgz.ondigitalocean.app/api/menuItems', {
+                const response = await axios.get('https://novi-backend-api-wgsgz.ondigitalocean.app/api/menuItems?sort=categoryId', {
                     headers: {
                         'novi-education-project-id': 'fa5d53e3-5361-45a4-b01e-ae2b978120fa',
                     },
@@ -79,11 +79,11 @@ function PlaceOrderPartOne() {
         }
 
         if (priceSort === "ascending") {
-            result = result.sort((a, b) => a.price - b.price);
+            result = result.sort((a, b) => a.unitPrice - b.unitPrice);
         }
 
         if (priceSort === "descending") {
-            result = result.sort((a, b) => b.price - a.price);
+            result = result.sort((a, b) => b.unitPrice - a.unitPrice);
         }
 
         return result;
@@ -129,7 +129,8 @@ function PlaceOrderPartOne() {
                                                 <MenuItem
                                                     itemName={item.name}
                                                     itemDescription={item.description}
-                                                    itemPrice={formatPrice(item.price)}
+                                                    itemPrice={formatPrice(item.unitPrice)}
+                                                    buttonText="+"
                                                     handleClick={() => setOrderItems(item)}
                                                 />
                                             </li>
