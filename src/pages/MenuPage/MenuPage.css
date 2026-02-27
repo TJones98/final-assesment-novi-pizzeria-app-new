@@ -6,3 +6,7 @@
     width: 50%;
     gap: 4rem;
 }
+
+.menu-page > button {
+    width: 100%;
+}

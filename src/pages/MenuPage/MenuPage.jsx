@@ -1,6 +1,7 @@
 import {useEffect, useMemo, useState} from "react";
 import axios from "axios";
 import MenuItem from "../../components/MenuItem/MenuItem.jsx";
+import Button from "../../components/Button/Button.jsx";
 import formatPrice from "../../helpers/formatPrice.js";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import FilterBar from "../../components/FilterBar/FilterBar";
@@ -82,6 +83,10 @@ function MenuPage() {
         navigate(`/menu/${itemId}`);
     }
 
+    function redirectToNewItem() {
+        navigate('/new-item');
+    }
+
     return (
         <>
             {error && <p>Er is iets misgegaan bij het ophalen van de data. Probeer het later nog eens.</p>}
@@ -98,6 +103,8 @@ function MenuPage() {
                     setPriceSort={setPriceSort}
                 />
 
+                <Button buttonType="button" buttonText="Nieuw gerecht maken" onClick={redirectToNewItem}/>
+
                 <section>
                     {filteredMenu.length > 0 ?
                         <ul className="menu-list">
@@ -109,7 +116,7 @@ function MenuPage() {
                                             itemDescription={item.description}
                                             itemPrice= {formatPrice(item.unitPrice)}
                                             buttonText="✎"
-                                            handleClick={() => redirectToEditor(item.id, item.name)}
+                                            handleClick={() => redirectToEditor(item.id)}
                                         />
                                     </li>
                                 )

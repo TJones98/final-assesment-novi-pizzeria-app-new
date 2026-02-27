@@ -29,12 +29,15 @@ function MenuDetail() {
             toggleLoading(true);
             toggleError(false);
             try {
-                const response = await axios.get(`https://novi-backend-api-wgsgz.ondigitalocean.app/api/menuItems/${id}`, {
-                    headers: {
-                        'novi-education-project-id': 'fa5d53e3-5361-45a4-b01e-ae2b978120fa',
-                    },
-                    signal: controller.signal,
-                });
+                const response = await axios.get(
+                    `https://novi-backend-api-wgsgz.ondigitalocean.app/api/menuItems/${id}`,
+                    {
+                        headers: {
+                            'novi-education-project-id': 'fa5d53e3-5361-45a4-b01e-ae2b978120fa',
+                        },
+                        signal: controller.signal,
+                    }
+                );
                 setItem(response.data);
                 setValue("name", response.data.name);
                 setValue("unitPrice", response.data.unitPrice);
@@ -46,8 +49,7 @@ function MenuDetail() {
                 if (axios.isCancel(e)) {
                     console.log('Request geannuleerd:', e);
                     toggleError(false);
-                }
-                else {
+                } else {
                     console.log("Ophalen van item mislukt", e);
                     toggleError(true);
                 }
@@ -55,6 +57,7 @@ function MenuDetail() {
                 toggleLoading(false);
             }
         }
+
         fetchItem();
 
         return function cleanup() {
@@ -132,7 +135,6 @@ function MenuDetail() {
             toggleLoading(false);
             redirectToMenu()
         }
-        deleteItem()
         return function cleanup() {
             controller.abort();
         };
