@@ -14,6 +14,7 @@ function MenuDetail() {
     const [error, toggleError] = useState(false);
     const [loading, toggleLoading] = useState(false);
     const [success, toggleSuccess] = useState(false);
+    const [deleteMessage, toggleDeleteMessage] = useState(false);
     const token = localStorage.getItem('token');
     const { register,
         setValue,
@@ -105,6 +106,38 @@ function MenuDetail() {
         };
     }
 
+    async function deleteItem() {
+        const controller = new AbortController();
+        toggleLoading(true);
+        toggleError(false);
+        try {
+            await axios.delete(`https://novi-backend-api-wgsgz.ondigitalocean.app/api/menuItems/${id}`, {
+                headers: {
+                    'novi-education-project-id': 'fa5d53e3-5361-45a4-b01e-ae2b978120fa',
+                    'Authorization': `Bearer ${token}`,
+                },
+                signal: controller.signal,
+            })
+            console.log("Item succesvol verwijderd")
+        } catch (e) {
+            if (axios.isCancel(e)) {
+                console.log('Request geannuleerd:', e);
+                toggleError(false);
+            }
+            else {
+                console.log("Verwijderen van item mislukt", e);
+                toggleError(true);
+            }
+        } finally {
+            toggleLoading(false);
+            redirectToMenu()
+        }
+        deleteItem()
+        return function cleanup() {
+            controller.abort();
+        };
+    }
+
     function redirectToMenu() {
         navigate("/menu");
     }
@@ -187,8 +220,14 @@ function MenuDetail() {
             </form>
             <div className="lower-buttons">
                 <Button buttonType="button" buttonText="Terug" onClick={redirectToMenu}/>
-                <Button buttonType="button" buttonText="Verwijder gerecht"/>
+                <Button buttonType="button" buttonText="Verwijder gerecht" onClick={() => toggleDeleteMessage(true)}/>
             </div>
+            {deleteMessage && (
+                <>
+                    <strong className="contrast-text">Weet je zeker dat je dit gerecht wilt verwijderen? Klik op onderstaande knop om te bevestigen</strong>
+                    <Button buttonType="button" buttonText="Verwijderen" onClick={deleteItem}/>
+                </>
+            )}
         </article>
 )
 }
