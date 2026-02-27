@@ -1,19 +1,62 @@
 import InputField from '../../components/InputField/InputField.jsx'
 import Button from "../../components/Button/Button.jsx";
-import React from "react";
+import React, {useState} from "react";
 import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
 import './MakeNewItem.css'
+import axios from "axios";
 
 function MakeNewItem () {
     const navigate = useNavigate();
+    const token = localStorage.getItem('token');
+    const [error, toggleError] = useState(false);
+    const [loading, toggleLoading] = useState(false);
     const { register,
         handleSubmit,
         formState: { errors}
     } = useForm();
 
     function handleFormSubmit(data) {
-        console.log(data);
+        const controller = new AbortController();
+
+        async function submitNewItem() {
+            toggleLoading(true);
+            toggleError(false);
+
+            try {
+                await axios.post('https://novi-backend-api-wgsgz.ondigitalocean.app/api/menuItems', {
+                    name: data.name,
+                    unitPrice: Number(data.unitPrice),
+                    description: data.description,
+                    categoryId: Number(data.categoryId),
+                    vegetarian: data.vegetarian === "true",
+                }, {
+                    headers: {
+                        'novi-education-project-id': 'fa5d53e3-5361-45a4-b01e-ae2b978120fa',
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    signal: controller.signal,
+                });
+                console.log("Nieuw gerecht aangemaakt")
+                navigate('/menu')
+            } catch (e) {
+                if (axios.isCancel(e)) {
+                    console.log('Request geannuleerd:', e);
+                    toggleError(false);
+                }
+                else {
+                    console.log("Aanmaken nieuw gerecht mislukt", e);
+                    toggleError(true);
+                }
+            } finally {
+                toggleLoading(false);
+            }
+        }
+        submitNewItem()
+        return function cleanup() {
+            controller.abort();
+        }
     }
 
     function redirectToMenu() {
@@ -22,6 +65,8 @@ function MakeNewItem () {
 
     return (
         <>
+            {error && <p>Er is iets misgegaan bij het verwerken van de data. Probeer het later nog eens.</p>}
+            {loading && <p>Loading...</p>}
             <form className='create-item-form' onSubmit={handleSubmit(handleFormSubmit)}>
                 <InputField
                     labelAndId="menu-item-name"
@@ -97,5 +142,6 @@ function MakeNewItem () {
         </>
     )
 }
+
 
 export default MakeNewItem;
