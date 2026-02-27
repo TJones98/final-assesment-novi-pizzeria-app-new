@@ -11,6 +11,10 @@ function MenuDetail() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [item, setItem] = useState(null);
+    const [error, toggleError] = useState(false);
+    const [loading, toggleLoading] = useState(false);
+    const [success, toggleSuccess] = useState(false);
+    const token = localStorage.getItem('token');
     const { register,
         setValue,
         handleSubmit,
@@ -18,29 +22,87 @@ function MenuDetail() {
     } = useForm();
 
     useEffect(() => {
+        const controller = new AbortController();
+
         async function fetchItem() {
+            toggleLoading(true);
+            toggleError(false);
             try {
                 const response = await axios.get(`https://novi-backend-api-wgsgz.ondigitalocean.app/api/menuItems/${id}`, {
                     headers: {
                         'novi-education-project-id': 'fa5d53e3-5361-45a4-b01e-ae2b978120fa',
                     },
+                    signal: controller.signal,
                 });
                 setItem(response.data);
                 setValue("name", response.data.name);
-                setValue("unitPrice", response.data.price);
+                setValue("unitPrice", response.data.unitPrice);
                 setValue("description", response.data.description);
                 setValue("categoryId", response.data.categoryId);
                 setValue("vegetarian", response.data.vegetarian);
                 console.log("Item info ophalen succesvol:", response.data);
             } catch (e) {
-                console.log("Item info ophalen mislukt:", e);
+                if (axios.isCancel(e)) {
+                    console.log('Request geannuleerd:', e);
+                    toggleError(false);
+                }
+                else {
+                    console.log("Ophalen van item mislukt", e);
+                    toggleError(true);
+                }
+            } finally {
+                toggleLoading(false);
             }
         }
         fetchItem();
+
+        return function cleanup() {
+            controller.abort();
+        };
     }, [id, setValue]);
 
     function handleFormSubmit(data) {
         console.log(data);
+
+        const controller = new AbortController();
+
+        async function updateItem() {
+            toggleLoading(true);
+            toggleError(false);
+            try {
+                await axios.put(`https://novi-backend-api-wgsgz.ondigitalocean.app/api/menuItems/${id}`, {
+                    id: id,
+                    name: data.name,
+                    unitPrice: Number(data.unitPrice),
+                    description: data.description,
+                    categoryId: Number(data.categoryId),
+                    vegetarian: data.vegetarian,
+                }, {
+                    headers: {
+                        'novi-education-project-id': 'fa5d53e3-5361-45a4-b01e-ae2b978120fa',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                    signal: controller.signal,
+                });
+                console.log("Data succesvol gewijzigd");
+                toggleSuccess(true)
+            } catch (e) {
+                if (axios.isCancel(e)) {
+                    console.log('Request geannuleerd:', e);
+                    toggleError(false);
+                }
+                else {
+                    console.log("Wijzigen van item mislukt", e);
+                    toggleError(true);
+                }
+            } finally {
+                toggleLoading(false);
+            }
+        }
+        updateItem();
+        return function cleanup() {
+            controller.abort();
+        };
     }
 
     function redirectToMenu() {
@@ -49,6 +111,9 @@ function MenuDetail() {
 
     return (
         <article className="menu-detail-container">
+            {error && <p>Er is iets misgegaan bij het verwerken van de data. Probeer het later nog eens.</p>}
+            {loading && <p>Loading...</p>}
+            {success && <strong className="contrast-text">Gerecht succesvol gewijzigd!</strong>}
             <form className="menu-item-details" onSubmit={handleSubmit(handleFormSubmit)}>
                 <InputField
                     labelAndId="menu-item-name"
@@ -104,7 +169,7 @@ function MenuDetail() {
                     register={register}
                     registerTitle="categoryId"
                     placeholderText="1 = pizza, 2 = pasta, 3 = bijgerecht, 4 = nagerecht"
-                    min={0}
+                    min={1}
                     max={4}
                     step={1}
                     errors={errors.categoryId && <p className="contrast-text">{errors.categoryId.message}</p>}

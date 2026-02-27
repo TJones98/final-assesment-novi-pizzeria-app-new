@@ -33,9 +33,8 @@ function App() {
                     <Route path="/place-order-1" element={<PlaceOrderPartOne />} />
                     <Route path="/place-order-2" element={<PlaceOrderPartTwo />} />
                     <Route path="/place-order-3" element={<PlaceOrderPartThree /> }/>
-                    <Route path="/menu" element={<MenuPage /> }/>
-                    {/*<Route path="/menu" element={userData && userData.roles.includes("admin") ? <MenuPage /> : <Navigate to="/login"/>}/>*/}
-                    <Route path="/menu/:id" element={<MenuDetail />} />
+                    <Route path="/menu" element={userData && userData.roles.includes("admin") ? <MenuPage /> : <Navigate to="/"/>}/>
+                    <Route path="/menu/:id" element={userData && userData.roles.includes("admin") ? <MenuDetail /> : <Navigate to="/"/>} />
                 </Routes>
             </main>
             <Footer/>

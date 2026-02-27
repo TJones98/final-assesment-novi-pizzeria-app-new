@@ -68,13 +68,13 @@ function MenuPage() {
         }
 
         if (priceSort === "ascending") {
-            result = result.sort((a, b) => a.price - b.price);
+            result = result.sort((a, b) => a.unitPrice - b.unitPrice);
         }
 
         if (priceSort === "descending") {
-            result = result.sort((a, b) => b.price - a.price);
+            result = result.sort((a, b) => b.unitPrice - a.unitPrice);
         }
-
+        console.log(result)
         return result;
     }, [menu, selectedCategories, isVegetarian, priceSort]);
 
@@ -107,7 +107,7 @@ function MenuPage() {
                                         <MenuItem
                                             itemName={item.name}
                                             itemDescription={item.description}
-                                            itemPrice={formatPrice(item.price)}
+                                            itemPrice= {formatPrice(item.unitPrice)}
                                             buttonText="✎"
                                             handleClick={() => redirectToEditor(item.id, item.name)}
                                         />

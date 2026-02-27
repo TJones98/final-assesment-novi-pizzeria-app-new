@@ -89,6 +89,10 @@ function StaffDashboard() {
         navigate(`/orders/${orderId}`);
     }
 
+    function redirectToMenu() {
+        navigate('/menu')
+    }
+
     return (
         <>
             <PageTitle title="Personeelsdashboard" subtitle="Werk ze vandaag!"/>
@@ -107,6 +111,7 @@ function StaffDashboard() {
                     buttonType="button"
                     buttonText="Bewerk menu"
                     disabled={!userData.roles.includes("admin")}
+                    onClick={redirectToMenu}
                 />
             </div>
             <Card height={1200}>
