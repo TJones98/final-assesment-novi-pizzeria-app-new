@@ -17,7 +17,7 @@ function SubmitOrderContextProvider ({ children }) {
                     orderItemsId: prevOrder.orderItems.length + 1,
                     menuId: item.id,
                     menuItemName: item.name,
-                    unitPrice: item.price,
+                    unitPrice: item.unitPrice,
                 }
             ]
         }));
