@@ -28,14 +28,14 @@ function OrderDetail() {
             Promise.all([
                 axios.get(`https://novi-backend-api-wgsgz.ondigitalocean.app/api/orders/${id}`, {
                     headers: {
-                        'novi-education-project-id': 'fa5d53e3-5361-45a4-b01e-ae2b978120fa',
+                        'novi-education-project-id': `${import.meta.env.VITE_PROJECT_ID}`,
                         'Authorization': `Bearer ${token}`,
                     },
                     signal: controller.signal,
                 }),
                 axios.get(`https://novi-backend-api-wgsgz.ondigitalocean.app/api/orders/${id}/orderItems`, {
                     headers: {
-                        'novi-education-project-id': 'fa5d53e3-5361-45a4-b01e-ae2b978120fa',
+                        'novi-education-project-id': `${import.meta.env.VITE_PROJECT_ID}`,
                         'Authorization': `Bearer ${token}`,
                     },
                 })
@@ -45,7 +45,7 @@ function OrderDetail() {
                     setOrderItems(orderItems);
                     return axios.get(`https://novi-backend-api-wgsgz.ondigitalocean.app/api/customers/${order.customerId}`, {
                         headers: {
-                            'novi-education-project-id': 'fa5d53e3-5361-45a4-b01e-ae2b978120fa',
+                            'novi-education-project-id': `${import.meta.env.VITE_PROJECT_ID}`,
                             'Authorization': `Bearer ${token}`,
                         },
                     });

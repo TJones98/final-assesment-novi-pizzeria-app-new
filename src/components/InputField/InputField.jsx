@@ -13,6 +13,7 @@ function InputField({
                         max,
                         validate,
                         maxLength,
+                        minLength,
                         step
 
 }) {
@@ -32,6 +33,7 @@ function InputField({
                            min: min ? { value: min, message: `Het getal kan niet lager dan ${min} zijn` } : undefined,
                            max: max ? { value: max, message: `Het getal kan niet hoger dan ${max} zijn` } : undefined,
                            maxLength: maxLength ? { value: maxLength, message: `Veld mag maximaal ${maxLength} karakters bevatten`} : undefined,
+                           minLength: minLength ? { value: minLength, message: `Veld moet minimaal ${minLength} karakters bevatten`} : undefined,
                            validate: validate
                        })}
                 />

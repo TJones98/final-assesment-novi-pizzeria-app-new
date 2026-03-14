@@ -1,0 +1,23 @@
+.register-user-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 450px;
+    font-size: 1.25rem;
+}
+
+.register-user-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.register-user-buttons button {
+    width: 10rem;
+}
+
+.roles-input {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}

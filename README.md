@@ -57,7 +57,8 @@ Configureer de API op de volgende wijze:
 
 ## Stap 4: omgevingsvariabelen instellen
 1. Maak een .env-bestand aan in de root (kopieer .env.dist als sjabloon).
-2. Vul de variabelen in volgens .env.dist. De examinatoren ontvangen in hun versie direct het ingevulde .env bestand.
+2. Vul de variabel-namen in volgens .env.dist. 
+   - De examinatoren ontvangen in hun versie direct het ingevulde .env bestand met daarin de waardes van de variabelen.
 3. Run het volgende commando in de terminal: npm run build
 
 ---

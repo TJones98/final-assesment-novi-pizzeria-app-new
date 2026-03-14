@@ -38,7 +38,7 @@ function PlaceOrderPartThree() {
             city: customerDetails.city
         }, {
             headers: {
-                'novi-education-project-id': 'fa5d53e3-5361-45a4-b01e-ae2b978120fa',
+                'novi-education-project-id': `${import.meta.env.VITE_PROJECT_ID}`,
                 'Content-Type': 'application/json'
             },
             signal: controller.signal,
@@ -54,7 +54,7 @@ function PlaceOrderPartThree() {
                     completed: false
                 }, {
                     headers: {
-                        'novi-education-project-id': 'fa5d53e3-5361-45a4-b01e-ae2b978120fa',
+                        'novi-education-project-id': `${import.meta.env.VITE_PROJECT_ID}`,
                         'Content-Type': 'application/json'
                     },
                     signal: controller.signal,
@@ -73,7 +73,7 @@ function PlaceOrderPartThree() {
                         unitPrice: item.unitPrice
                     }, {
                         headers: {
-                            'novi-education-project-id': 'fa5d53e3-5361-45a4-b01e-ae2b978120fa',
+                            'novi-education-project-id': `${import.meta.env.VITE_PROJECT_ID}`,
                             'Content-Type': 'application/json'
                         },
                         signal: controller.signal,

@@ -37,7 +37,7 @@ function PlaceOrderPartOne() {
             try {
                 const response = await axios.get('https://novi-backend-api-wgsgz.ondigitalocean.app/api/menuItems?sort=categoryId', {
                     headers: {
-                        'novi-education-project-id': 'fa5d53e3-5361-45a4-b01e-ae2b978120fa',
+                        'novi-education-project-id': `${import.meta.env.VITE_PROJECT_ID}`,
                     },
                     signal: controller.signal,
                 });

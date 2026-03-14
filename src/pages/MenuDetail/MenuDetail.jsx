@@ -33,7 +33,7 @@ function MenuDetail() {
                     `https://novi-backend-api-wgsgz.ondigitalocean.app/api/menuItems/${id}`,
                     {
                         headers: {
-                            'novi-education-project-id': 'fa5d53e3-5361-45a4-b01e-ae2b978120fa',
+                            'novi-education-project-id': `${import.meta.env.VITE_PROJECT_ID}`,
                         },
                         signal: controller.signal,
                     }
@@ -83,7 +83,7 @@ function MenuDetail() {
                     vegetarian: data.vegetarian,
                 }, {
                     headers: {
-                        'novi-education-project-id': 'fa5d53e3-5361-45a4-b01e-ae2b978120fa',
+                        'novi-education-project-id': `${import.meta.env.VITE_PROJECT_ID}`,
                         'Authorization': `Bearer ${token}`,
                     },
                     signal: controller.signal,
@@ -116,7 +116,7 @@ function MenuDetail() {
         try {
             await axios.delete(`https://novi-backend-api-wgsgz.ondigitalocean.app/api/menuItems/${id}`, {
                 headers: {
-                    'novi-education-project-id': 'fa5d53e3-5361-45a4-b01e-ae2b978120fa',
+                    'novi-education-project-id': `${import.meta.env.VITE_PROJECT_ID}`,
                     'Authorization': `Bearer ${token}`,
                 },
                 signal: controller.signal,

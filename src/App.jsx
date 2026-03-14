@@ -14,6 +14,7 @@ import MenuDetail from './pages/MenuDetail/MenuDetail.jsx';
 import OrderDetail from './pages/OrderDetail/OrderDetail.jsx';
 import Navigation from './components/navigation/Navigation.jsx';
 import Footer from "./components/footer/Footer.jsx";
+import CreateNewUser from './pages/CreateNewUser/CreateNewUser.jsx';
 import {AuthContext} from "./contexts/AuthContext.jsx";
 
 
@@ -37,6 +38,7 @@ function App() {
                     <Route path="/menu" element={userData && userData.roles.includes("admin") ? <MenuPage /> : <Navigate to="/"/>}/>
                     <Route path="/menu/:id" element={userData && userData.roles.includes("admin") ? <MenuDetail /> : <Navigate to="/"/>} />
                     <Route path="/new-item" element={userData && userData.roles.includes("admin") ? <MakeNewItem /> : <Navigate to="/"/>} />
+                    <Route path="/new-user" element={userData && userData.roles.includes("admin") ? <CreateNewUser /> : <Navigate to="/"/>} />
                 </Routes>
             </main>
             <Footer/>

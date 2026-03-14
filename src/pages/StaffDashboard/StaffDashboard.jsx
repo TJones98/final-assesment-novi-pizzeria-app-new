@@ -27,7 +27,7 @@ function StaffDashboard() {
             try {
                 const response = await axios.get('https://novi-backend-api-wgsgz.ondigitalocean.app/api/orders?sort=orderDate,timeslot', {
                     headers: {
-                        'novi-education-project-id': 'fa5d53e3-5361-45a4-b01e-ae2b978120fa',
+                        'novi-education-project-id': `${import.meta.env.VITE_PROJECT_ID}`,
                         'Authorization': `Bearer ${token}`,
                     },
                     signal: controller.signal,
@@ -71,7 +71,7 @@ function StaffDashboard() {
                 "completed": !currentStatus,
             }, {
                 headers: {
-                    'novi-education-project-id': 'fa5d53e3-5361-45a4-b01e-ae2b978120fa',
+                    'novi-education-project-id': `${import.meta.env.VITE_PROJECT_ID}`,
                     'Authorization': `Bearer ${token}`,
                 }
             });
@@ -93,6 +93,10 @@ function StaffDashboard() {
         navigate('/menu')
     }
 
+    function redirectToNewUser() {
+        navigate('/new-user');
+    }
+
     return (
         <>
             <PageTitle title="Personeelsdashboard" subtitle="Werk ze vandaag!"/>
@@ -112,6 +116,12 @@ function StaffDashboard() {
                     buttonText="Bewerk menu"
                     disabled={!userData.roles.includes("admin")}
                     onClick={redirectToMenu}
+                />
+                <Button
+                    buttonType="button"
+                    buttonText="Nieuwe gebruiker registreren"
+                    disabled={!userData.roles.includes("admin")}
+                    onClick={redirectToNewUser}
                 />
             </div>
             <Card height={1200}>

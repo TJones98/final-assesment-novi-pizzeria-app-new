@@ -32,7 +32,7 @@ function MakeNewItem () {
                     vegetarian: data.vegetarian === "true",
                 }, {
                     headers: {
-                        'novi-education-project-id': 'fa5d53e3-5361-45a4-b01e-ae2b978120fa',
+                        'novi-education-project-id': `${import.meta.env.VITE_PROJECT_ID}`,
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
                     },
