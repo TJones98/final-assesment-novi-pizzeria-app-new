@@ -25,7 +25,22 @@ Deze applicatie is ontwikkeld voor **Pizzeria Palermo**, een fictief Italiaans r
 - Admins kunnen het menu aanpassen
 - Medewerkers en admins kunnen inloggen. Daarnaast kunnen admins nieuwe gebruikers registreren.
 
-**Tech stack**: React, Vite, HTML, CSS, JavaScript.
+**Tech stack**: 
+- React 
+- Vite
+- HTML
+- CSS
+- JavaScript
+
+**Beschikbare npm scripts**: 
+- dev
+  - vite
+- build
+  - vite build
+- lint
+  - eslint
+- preview
+  - vite preview
 
 Hieronder vind je een stappenplan om het project lokaal op te zetten, te configureren en te draaien.
 
